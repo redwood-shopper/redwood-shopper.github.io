@@ -59,14 +59,51 @@ input[type=file]{width:100%;min-height:44px;margin-top:4px}
 .msg.err{display:block;background:var(--warn-bg);color:var(--warn)}
 .msg.ok{display:block;background:var(--green);color:var(--on)}
 .go:disabled{opacity:.6;cursor:wait}
+.stp{display:flex;align-items:center;gap:6px}.stp button{min-width:44px;min-height:44px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:20px;cursor:pointer}.stp b{min-width:22px;text-align:center}.cat .c.on{background:var(--green);color:var(--on);border-color:var(--green)}.cat .sm{display:block;color:var(--mute);font-size:13px}
+main{padding-bottom:100px}
+[hidden]{display:none!important}
+#nav{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));max-width:576px;margin:0 auto;display:flex;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:30px;box-shadow:0 6px 24px rgba(0,0,0,.18);padding:6px;z-index:10}
+#nav button{flex:1;border:0;background:none;color:var(--mute);font:600 12px system-ui;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:52px;border-radius:24px;position:relative;cursor:pointer}
+#nav button.on{background:var(--green);color:var(--on)}
+#nav .ic{font-size:22px;line-height:1.1}
+#badge{position:absolute;top:2px;right:18%;background:var(--gold);color:#fff;border-radius:999px;font:700 11px system-ui;padding:1px 6px;font-style:normal}
+.ban{display:flex;gap:12px;align-items:center;background:var(--warn-bg);color:var(--warn);border:1px solid var(--gold);border-radius:12px;padding:12px;margin-bottom:14px}
+.ban .ic{font-size:28px}.ban small{display:block}
+.ban button{margin-left:auto;flex:none;border:0;border-radius:10px;background:var(--gold);color:#fff;font:700 14px system-ui;min-height:44px;padding:0 14px;cursor:pointer}
+button.tile,button.ct{font:inherit;color:var(--ink);text-align:left;width:100%}
+.ct{display:flex;align-items:center;gap:10px;border:2px solid var(--line);border-radius:10px;padding:10px;min-height:56px;cursor:pointer;background:var(--bg)}
+.tile.on,.ct.on{border-color:var(--green);background:var(--green);color:var(--on)}
+.ct.dim{opacity:.55}
+.ct .e{font-size:24px}
+.bd{margin-left:auto;font-size:12px;background:var(--gold);color:#fff;border-radius:999px;padding:2px 8px;white-space:nowrap}
+.act{font-size:12px;background:var(--green);color:var(--on);border-radius:999px;padding:2px 8px;margin-left:auto}
+.tile.on .act{background:var(--on);color:var(--green)}
+.hc{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:10px;background:var(--bg)}
+.hc pre{white-space:pre-wrap;font:13px/1.4 ui-monospace,Menlo,monospace;margin:6px 0 0}
 </style>
 </head>
 <body>
 <main>
 <header><div><h1>Redwood Shopper</h1><p data-t="tag"></p></div><button id="lang" type="button"></button></header>
-<div id="repeat" style="display:none"><button class="go" id="repBtn" type="button" style="line-height:1.3;padding:10px 14px;margin:0 0 14px"></button></div>
-
-<section>
+<div class="pane" id="p-shop">
+ <div class="ban"><span class="ic" aria-hidden="true">📷</span><div><b data-t="banT"></b><small data-t="banS"></small></div><button type="button" id="upBtn" data-t="upBtn"></button></div>
+ <div class="note" id="photoHint" data-t="photoHint" hidden></div>
+ <section><h2 data-t="hS1"></h2><div class="grid" id="tiles"></div></section>
+ <section id="catsec"><h2 id="catH"></h2><div class="grid" id="cats"></div><input type="search" id="srch" autocomplete="off" style="margin-top:12px"><div id="prods"></div></section>
+</div>
+<div class="pane" id="p-cart" hidden>
+ <section><h2 data-t="hCart"></h2><div id="lists"></div></section>
+ <section>
+ <h2 data-t="h3"></h2>
+ <label class="f" for="vol" data-t="lVol"></label>
+ <select id="vol"><option value="0" data-t="v0"></option><option value="1" data-t="v1"></option><option value="2" data-t="v2"></option></select>
+ <div style="margin-top:12px" id="out" aria-live="polite"></div>
+ <div class="note" data-t="n1"></div>
+ <div class="note" data-t="n2"></div>
+</section>
+</div>
+<div class="pane" id="p-order" hidden>
+ <section>
  <h2 data-t="h1"></h2>
  <label class="f" for="comm" data-t="lComm"></label>
  <select id="comm"><option value="" data-t="pick"></option>
@@ -79,24 +116,7 @@ input[type=file]{width:100%;min-height:44px;margin-top:4px}
  <div class="note" data-t="cutoff"></div>
  <div class="note" id="eta" aria-live="polite"></div>
 </section>
-
-<section>
- <h2 data-t="h2"></h2>
- <small class="h" data-t="storeHelp"></small>
- <div class="grid" id="tiles" style="margin-top:10px"></div>
- <div id="lists"></div>
-</section>
-
-<section>
- <h2 data-t="h3"></h2>
- <label class="f" for="vol" data-t="lVol"></label>
- <select id="vol"><option value="0" data-t="v0"></option><option value="1" data-t="v1"></option><option value="2" data-t="v2"></option></select>
- <div style="margin-top:12px" id="out" aria-live="polite"></div>
- <div class="note" data-t="n1"></div>
- <div class="note" data-t="n2"></div>
-</section>
-
-<section>
+ <section>
  <h2 data-t="h4"></h2>
  <small class="h" data-t="saveNote"></small>
  <label class="f" for="name" data-t="lName"></label><input type="text" id="name" autocomplete="name">
@@ -116,8 +136,7 @@ input[type=file]{width:100%;min-height:44px;margin-top:4px}
  <label class="f" for="spec" data-t="lSpec"></label><textarea id="spec" style="min-height:80px"></textarea>
  <button type="button" class="lnk" id="forget" data-t="forget"></button>
 </section>
-
-<section>
+ <section>
  <h2 data-t="h5"></h2>
  <small class="h" data-t="sumHelp"></small>
  <textarea id="sum" readonly style="margin-top:10px"></textarea>
@@ -130,7 +149,19 @@ input[type=file]{width:100%;min-height:44px;margin-top:4px}
  <button class="go" id="copy" type="button" style="background:var(--bg);color:var(--ink);border:2px solid var(--line)"></button>
  <a class="go" id="wa" target="_blank" rel="noopener"></a>
 </section>
+</div>
+<div class="pane" id="p-orders" hidden>
+ <section><h2 data-t="hOrders"></h2><div id="okBanner" class="msg" role="status"></div>
+ <div id="repeat" style="display:none"><button class="go" id="repBtn" type="button" style="line-height:1.3;padding:10px 14px;margin:0 0 14px"></button></div>
+ <div id="hist"></div><small class="h" data-t="ordersNote"></small></section>
+</div>
 </main>
+<nav id="nav" aria-label="Main">
+ <button type="button" data-tab="shop"><span class="ic" aria-hidden="true">🏪</span><span data-t="tShop"></span></button>
+ <button type="button" data-tab="cart"><span class="ic" aria-hidden="true">🛒</span><span data-t="tCart"></span><i id="badge" hidden></i></button>
+ <button type="button" data-tab="order"><span class="ic" aria-hidden="true">📝</span><span data-t="tOrder"></span></button>
+ <button type="button" data-tab="orders"><span class="ic" aria-hidden="true">📦</span><span data-t="tOrders"></span></button>
+</nav>
 
 <script>
 // Add your WhatsApp number (country code + digits only, e.g. "17075550123") to show a "Send by WhatsApp" button.
@@ -138,33 +169,42 @@ var WHATSAPP = "";
 var STORES=[["CVS","🏪"],["Costco","📦"],["Grocery Outlet","🏷️"],["Safeway","🏬"],["Target","🎯"],["Walgreens","💊"],["Walmart","🏢"],["WinCo","🛒"]];
 var BASE={1:35,2:40,3:45};
 var T={es:{
-tag:"Compras a domicilio en Garberville y el sur del condado de Humboldt.",h1:"1. Tu entrega",lEmail:"Correo electrónico (opcional)",lComm:"Comunidad de entrega",pick:"Elige tu comunidad",otherC:"Otra comunidad (confirmaremos la zona)",lDay:"Día de entrega",tue:"Martes",fri:"Viernes",
+tShop:"Tienda",tCart:"Carrito",tOrder:"Pedido",tOrders:"Mis pedidos",banT:"¿Tienes una lista escrita a mano?",banS:"Sube una foto y nosotros hacemos las compras.",upBtn:"Subir foto",photoHint:"Ahora toca la tienda para esta lista.",hS1:"1. Elige tu tienda",hS2:"2. Explora las categorías",selHint:"Elige una tienda arriba para empezar. Cada tienda tiene su propia lista de compras.",hCart:"Tu carrito",cartEmpty:"Tu carrito está vacío. Elige una tienda en Tienda y agrega productos o escribe tu lista.",goShop:"Ir a Tienda",rmStore:"Quitar tienda",noItemsCat:"Aún no hay productos",freeQ:"¿No lo encuentras? Escribe lo que quieres",freeAdd:"Agregar a mi lista",freeOk:"Agregado a tu lista de ",hOrders:"Mis pedidos",noOrders:"Todavía no has enviado pedidos desde este teléfono.",ordersNote:"Confirmamos cada pedido por teléfono o mensaje antes de comprar. Este historial se guarda solo en este teléfono.",prodH:"Productos",tag:"Compras a domicilio en Garberville y el sur del condado de Humboldt.",h1:"Entrega",lEmail:"Correo electrónico (opcional)",lComm:"Comunidad de entrega",pick:"Elige tu comunidad",otherC:"Otra comunidad (confirmaremos la zona)",lDay:"Día de entrega",tue:"Martes",fri:"Viernes",
 cutoff:"Entregamos martes y viernes. Pide antes de las 6 PM de la noche anterior.",h2:"2. Tiendas y lista de compras",storeHelp:"Toca cada tienda donde quieres que compremos y escribe tu lista, un artículo por línea. Todo se junta en un solo pedido.",
-h3:"3. Costo estimado",lVol:"Tamaño total del pedido",v0:"Normal",v1:"Grande (Large)",v2:"Extra grande (Extra Large)",
+h3:"Costo estimado",lVol:"Tamaño total del pedido",v0:"Normal",v1:"Grande (Large)",v2:"Extra grande (Extra Large)",
 n1:"Cualquier cargo adicional se te comunicará y deberás aprobarlo antes de que compremos.",
-h4:"4. Tus datos",lName:"Nombre completo",lPhone:"Teléfono",lAddr:"Dirección de entrega",lInst:"Instrucciones de entrega (opcional)",lPay:"Forma de pago",cash:"Efectivo",oth:"Otro",
+h4:"Tus datos",lName:"Nombre completo",lPhone:"Teléfono",lAddr:"Dirección de entrega",lInst:"Instrucciones de entrega (opcional)",lPay:"Forma de pago",cash:"Efectivo",oth:"Otro",
 payNote:"El pago se necesita antes de comprar. Te contactaremos para coordinarlo. Esta página no procesa pagos.",
 auth:"Autorizo hasta $20 sobre mi presupuesto, solo para productos y sin contactarme antes.",lRef:"Si falta un producto o hay un ajuste de precio, prefiero:",
 r1:"Reembolso al pago original",r2:"Crédito para mi próximo pedido",r3:"Reembolso en efectivo",r4:"Contáctenme para decidir",lSpec:"Instrucciones especiales (alergias, sustituciones, marcas)",
-h5:"5. Resumen para enviar",sumHelp:"Revisa tu pedido y presiona Enviar. Revisaremos y confirmaremos tu pedido antes de comprar.",consent:"Confirmo que mi pedido es correcto y entiendo que el pago se necesita antes de que compren.",send:"Enviar mi pedido",sending:"Enviando… no cierres esta página.",sentOk:"¡Pedido recibido! Te contactaremos para confirmar el costo y el pago antes de comprar.",sentErr:"No se pudo enviar. Revisa tu conexión e inténtalo otra vez, o copia el resumen y envíalo por mensaje.",needInfo:"Falta tu nombre, teléfono, dirección o comunidad.",needList:"Escribe tu lista o agrega la foto de cada tienda.",needPhoto:"Agrega la foto de tu lista.",needConsent:"Marca la casilla para confirmar tu pedido.",longList:"Tu lista es demasiado larga. Acórtala o envía una foto.",addPhoto:"Foto de tu lista (máximo 3 en total)",photoErr:"No pude leer esa foto. Prueba con otra.",maxPhotos:"Máximo 3 fotos por pedido.",rm:"Quitar foto",copy:"Solo copiar el resumen",copied:"Copiado",wa:"Enviar por WhatsApp",
-listLbl:"Tu lista (un artículo por línea)",repeat:"Repetir mi último pedido",forget:"Borrar mis datos guardados en este teléfono",saveNote:"Guardamos tus datos solo en este teléfono para que no los escribas otra vez.",quick:"Agregar rápido",qhint:"Toca para agregar; luego puedes cambiar la cantidad.",eta1:"Si eliges este día, tu próxima entrega es el ",eta2:". Pide antes del ",eta3:", 6 PM (hora del Pacífico).",n2:"Puedes autorizar hasta $20 más solo para productos, nunca para cargos de servicio. Si sobra dinero, lo devolvemos o lo dejamos como crédito, según lo que elijas.",modeW:"Escribir mi lista",modeP:"Enviar foto de mi lista",photoN:"Cantidad aproximada de artículos en la foto",photoNote:"Toma la foto con buena luz y letra clara. Se envía junto con tu pedido.",photoSum:"FOTO de la lista (adjunta al pedido)",budLbl:"Presupuesto de esta tienda ($)",items:"artículos",ph:"leche\nhuevos\npan",
+h5:"Revisar y enviar",sumHelp:"Revisa tu pedido y presiona Enviar. Revisaremos y confirmaremos tu pedido antes de comprar.",consent:"Confirmo que mi pedido es correcto y entiendo que el pago se necesita antes de que compren.",send:"Enviar mi pedido",sending:"Enviando… no cierres esta página.",sentOk:"¡Pedido recibido! Te contactaremos para confirmar el costo y el pago antes de comprar.",sentErr:"No se pudo enviar. Revisa tu conexión e inténtalo otra vez, o copia el resumen y envíalo por mensaje.",needInfo:"Falta tu nombre, teléfono, dirección o comunidad.",needList:"Escribe tu lista o agrega la foto de cada tienda.",needPhoto:"Agrega la foto de tu lista.",needConsent:"Marca la casilla para confirmar tu pedido.",longList:"Tu lista es demasiado larga. Acórtala o envía una foto.",addPhoto:"Foto de tu lista (máximo 3 en total)",photoErr:"No pude leer esa foto. Prueba con otra.",maxPhotos:"Máximo 3 fotos por pedido.",rm:"Quitar foto",copy:"Solo copiar el resumen",copied:"Copiado",wa:"Enviar por WhatsApp",
+listLbl:"Tu lista (un artículo por línea)",browse:"Ver productos y precios",browseHint:"Elige una categoría y agrega productos. Los precios son aproximados, de nuestra última compra en la fecha indicada, y pueden cambiar.",picked:"Productos elegidos",estP:"Estimado",useBud:"Usar como presupuesto",noCat:"Todavía no hay productos de esta tienda. Escribe tu lista arriba.",repeat:"Repetir mi último pedido",forget:"Borrar mis datos guardados en este teléfono",saveNote:"Guardamos tus datos solo en este teléfono para que no los escribas otra vez.",quick:"Agregar rápido",qhint:"Toca para agregar; luego puedes cambiar la cantidad.",eta1:"Si eliges este día, tu próxima entrega es el ",eta2:". Pide antes del ",eta3:", 6 PM (hora del Pacífico).",n2:"Puedes autorizar hasta $20 más solo para productos, nunca para cargos de servicio. Si sobra dinero, lo devolvemos o lo dejamos como crédito, según lo que elijas.",modeW:"Escribir mi lista",modeP:"Enviar foto de mi lista",photoN:"Cantidad aproximada de artículos en la foto",photoNote:"Toma la foto con buena luz y letra clara. Se envía junto con tu pedido.",photoSum:"FOTO de la lista (adjunta al pedido)",budLbl:"Presupuesto de esta tienda ($). Déjalo vacío para usar el estimado de los productos",items:"artículos",ph:"leche\nhuevos\npan",
 groc:"Productos (estimado)",zone:"Entrega, zona",stores:"Tiendas adicionales",large:"Pedido grande",total:"Total a pagar antes de comprar",quote:"Cotización especial",confirm:"Por confirmar",
 xl:"Un pedido Extra grande necesita cotización especial. Te escribiremos con el precio antes de comprar.",cz:"Confirmaremos tu zona y el costo de entrega antes de comprar.",
-none:"Elige al menos una tienda",lang:"English",S:{n:"Nombre",p:"Teléfono",a:"Dirección",c:"Comunidad",d:"Día",pay:"Pago",auth:"Autoriza hasta $20 extra solo para productos",noauth:"No autoriza extra sin contactarlo",ref:"Si falta algo",inst:"Entrega",spec:"Especial",list:"LISTA DE COMPRAS",fees:"COSTO ESTIMADO"}},
+none:"Agrega al menos un producto o lista",ocrBtn:"Leer el texto de la foto (opcional)",ocrHint:"Es gratis y se hace en tu teléfono. Revisa y corrige el texto; la foto se envía de todos modos.",ocrPh:"El texto leído aparecerá aquí. Corrígelo si hace falta.",ocrLoad:"Preparando el lector… la primera vez tarda un poco.",ocrRead:"Leyendo foto",ocrErr:"No se pudo leer la foto. No pasa nada: la enviamos tal cual y nosotros la leemos.",lang:"English",S:{n:"Nombre",p:"Teléfono",a:"Dirección",c:"Comunidad",d:"Día",pay:"Pago",auth:"Autoriza hasta $20 extra solo para productos",noauth:"No autoriza extra sin contactarlo",ref:"Si falta algo",inst:"Entrega",spec:"Especial",list:"LISTA DE COMPRAS",fees:"COSTO ESTIMADO"}},
 en:{
-tag:"Grocery delivery in Garberville and Southern Humboldt County.",h1:"1. Your delivery",lEmail:"Email (optional)",lComm:"Delivery community",pick:"Choose your community",otherC:"Other community (we will confirm the zone)",lDay:"Delivery day",tue:"Tuesday",fri:"Friday",
+tShop:"Shop",tCart:"Cart",tOrder:"Order",tOrders:"My Orders",banT:"Have a handwritten list?",banS:"Upload a photo and we'll do the shopping.",upBtn:"Upload Photo",photoHint:"Now tap the store this list is for.",hS1:"1. Choose your store",hS2:"2. Browse categories",selHint:"Select a store above to start browsing. Each store has its own shopping list.",hCart:"Your cart",cartEmpty:"Your cart is empty. Choose a store in Shop, then add products or write your list.",goShop:"Go to Shop",rmStore:"Remove store",noItemsCat:"No products yet",freeQ:"Can't find it? Type what you want",freeAdd:"Add to my list",freeOk:"Added to your list for ",hOrders:"My orders",noOrders:"No orders sent from this phone yet.",ordersNote:"We confirm each order by phone or text before shopping. This history is saved only on this phone.",prodH:"Products",tag:"Grocery delivery in Garberville and Southern Humboldt County.",h1:"Delivery",lEmail:"Email (optional)",lComm:"Delivery community",pick:"Choose your community",otherC:"Other community (we will confirm the zone)",lDay:"Delivery day",tue:"Tuesday",fri:"Friday",
 cutoff:"We deliver Tuesday and Friday. Order by 6 PM the evening before.",h2:"2. Stores and shopping list",storeHelp:"Tap each store you want us to shop at and write your list, one item per line. Everything is combined into one order.",
-h3:"3. Estimated cost",lVol:"Total order size",v0:"Normal",v1:"Large",v2:"Extra Large",
+h3:"Estimated cost",lVol:"Total order size",v0:"Normal",v1:"Large",v2:"Extra Large",
 n1:"Any extra charge will be shared with you and needs your approval before we shop.",
-h4:"4. Your details",lName:"Full name",lPhone:"Phone number",lAddr:"Delivery address",lInst:"Delivery instructions (optional)",lPay:"Payment method",cash:"Cash",oth:"Other",
+h4:"Your details",lName:"Full name",lPhone:"Phone number",lAddr:"Delivery address",lInst:"Delivery instructions (optional)",lPay:"Payment method",cash:"Cash",oth:"Other",
 payNote:"Payment is required before shopping. We will contact you to arrange it. This page does not process payments.",
 auth:"I authorize up to $20 over my budget, for groceries only, without contacting me first.",lRef:"If an item is unavailable or a price adjustment is needed, I prefer:",
 r1:"Refund to original payment",r2:"Credit toward next order",r3:"Cash refund",r4:"Contact me to discuss",lSpec:"Special instructions (allergies, substitutions, brands)",
-h5:"5. Summary to send",sumHelp:"Check your order and press Send. We will review and confirm your order before shopping.",consent:"I confirm my order is correct and I understand payment is required before shopping.",send:"Send my order",sending:"Sending… please keep this page open.",sentOk:"Order received! We will contact you to confirm the cost and payment before shopping.",sentErr:"Could not send. Check your connection and try again, or copy the summary and send it by message.",needInfo:"Your name, phone, address or community is missing.",needList:"Write your list or add a photo for each store.",needPhoto:"Please add a photo of your list.",needConsent:"Check the box to confirm your order.",longList:"Your list is too long. Shorten it or send a photo.",addPhoto:"Photo of your list (3 max in total)",photoErr:"I could not read that photo. Try another one.",maxPhotos:"Maximum 3 photos per order.",rm:"Remove photo",copy:"Just copy the summary",copied:"Copied",wa:"Send by WhatsApp",
-listLbl:"Your list (one item per line)",repeat:"Repeat my last order",forget:"Delete my data saved on this phone",saveNote:"We save your details only on this phone so you do not have to type them again.",quick:"Quick add",qhint:"Tap to add; then you can change the quantity.",eta1:"If you choose this day, your next delivery is ",eta2:". Order before ",eta3:", 6 PM (Pacific time).",n2:"You can authorize up to $20 more for groceries only, never for service fees. If there is money left, we refund it or keep it as credit, as you choose.",modeW:"Write my list",modeP:"Send a photo of my list",photoN:"Approximate number of items in the photo",photoNote:"Take the photo in good light with clear writing. It is sent with your order.",photoSum:"PHOTO of the list (attached to the order)",budLbl:"Budget for this store ($)",items:"items",ph:"milk\neggs\nbread",
+h5:"Review and send",sumHelp:"Check your order and press Send. We will review and confirm your order before shopping.",consent:"I confirm my order is correct and I understand payment is required before shopping.",send:"Send my order",sending:"Sending… please keep this page open.",sentOk:"Order received! We will contact you to confirm the cost and payment before shopping.",sentErr:"Could not send. Check your connection and try again, or copy the summary and send it by message.",needInfo:"Your name, phone, address or community is missing.",needList:"Write your list or add a photo for each store.",needPhoto:"Please add a photo of your list.",needConsent:"Check the box to confirm your order.",longList:"Your list is too long. Shorten it or send a photo.",addPhoto:"Photo of your list (3 max in total)",photoErr:"I could not read that photo. Try another one.",maxPhotos:"Maximum 3 photos per order.",rm:"Remove photo",copy:"Just copy the summary",copied:"Copied",wa:"Send by WhatsApp",
+listLbl:"Your list (one item per line)",browse:"Browse products and prices",browseHint:"Pick a category and add products. Prices are approximate, from our last purchase on the date shown, and can change.",picked:"Selected products",estP:"Estimate",useBud:"Use as budget",noCat:"No products for this store yet. Write your list above.",repeat:"Repeat my last order",forget:"Delete my data saved on this phone",saveNote:"We save your details only on this phone so you do not have to type them again.",quick:"Quick add",qhint:"Tap to add; then you can change the quantity.",eta1:"If you choose this day, your next delivery is ",eta2:". Order before ",eta3:", 6 PM (Pacific time).",n2:"You can authorize up to $20 more for groceries only, never for service fees. If there is money left, we refund it or keep it as credit, as you choose.",modeW:"Write my list",modeP:"Send a photo of my list",photoN:"Approximate number of items in the photo",photoNote:"Take the photo in good light with clear writing. It is sent with your order.",photoSum:"PHOTO of the list (attached to the order)",budLbl:"Budget for this store ($). Leave blank to use the product estimate",items:"items",ph:"milk\neggs\nbread",
 groc:"Groceries (estimate)",zone:"Delivery, zone",stores:"Additional stores",large:"Large order",total:"Total to pay before we shop",quote:"Custom quote",confirm:"To be confirmed",
 xl:"An Extra Large order needs a custom quote. We will contact you with the price before shopping.",cz:"We will confirm your zone and delivery cost before shopping.",
-none:"Choose at least one store",lang:"Español",S:{n:"Name",p:"Phone",a:"Address",c:"Community",d:"Day",pay:"Payment",auth:"Authorizes up to $20 extra, groceries only",noauth:"No extra authorized without contacting",ref:"If item missing",inst:"Delivery",spec:"Special",list:"SHOPPING LIST",fees:"ESTIMATED COST"}}};
+none:"Add at least one product or list",ocrBtn:"Read the text from the photo (optional)",ocrHint:"It is free and runs on your phone. Check and fix the text; the photo is still sent.",ocrPh:"The text read from the photo will appear here. Fix it if needed.",ocrLoad:"Getting the reader ready… the first time takes a moment.",ocrRead:"Reading photo",ocrErr:"Could not read the photo. No problem: we will send it as is and read it ourselves.",lang:"Español",S:{n:"Name",p:"Phone",a:"Address",c:"Community",d:"Day",pay:"Payment",auth:"Authorizes up to $20 extra, groceries only",noauth:"No extra authorized without contacting",ref:"If item missing",inst:"Delivery",spec:"Special",list:"SHOPPING LIST",fees:"ESTIMATED COST"}}};
+// Price catalog (approximate prices from our own purchases; update from the price sheet). Fields: store, category, name ES, name EN, size ES, size EN, price, date
+var CATS=["Dairy", "Fruits & Vegetables", "Meat & Seafood", "Bakery", "Frozen Foods", "Beverages", "Pantry Items", "Household Essentials", "Health & Personal Care", "Baby & Family", "First Aid", "Pet Supplies"],CATS_ES=["Lácteos y huevos", "Frutas y verduras", "Carnes y mariscos", "Pan y panadería", "Congelados", "Bebidas", "Despensa", "Hogar y limpieza", "Salud y cuidado personal", "Bebés y familia", "Primeros auxilios", "Mascotas"];
+var CAT=[],sq="",shown=60;
+// One price file per store, loaded on first use; items are appended to CAT so cart indexes stay stable
+var SF={"Costco":"precios-costco.json","Grocery Outlet":"precios-groceryoutlet.json","Safeway":"precios-safeway.json","Walmart":"precios-walmart.json","WinCo":"precios-winco.json","CVS":"precios-cvs.json","Target":"precios-target.json","Walgreens":"precios-walgreens.json"},LOADED={};
+function loadStore(n,cb){if(LOADED[n]||!SF[n]){cb();return}
+ var h=document.getElementById("prods");if(h)h.innerHTML='<div class="note">…</div>';
+ fetch(SF[n]).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){d.forEach(function(x){CAT.push(x)});LOADED[n]=1;cb()}).catch(function(){LOADED[n]=1;cb()})}
+var cart={},bcat={},bopen={};
 var lang="en",lists={},buds={},sel={},modes={},pcount={};
 var $=function(i){return document.getElementById(i)},q=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
 function money(n){return "$"+n.toFixed(2).replace(/\.00$/,"")}
@@ -174,9 +214,7 @@ function checked(n){var e=document.querySelector('input[name="'+n+'"]:checked');
 function label(e){return e.parentNode.textContent.trim()}
 
 function tiles(){
- $("tiles").innerHTML=STORES.map(function(s){return '<label class="tile"><input type="checkbox" value="'+s[0]+'"'+(sel[s[0]]?" checked":"")+'><span class="e" aria-hidden="true">'+s[1]+'</span><b>'+s[0]+'</b></label>'}).join("");
- q("#tiles input").forEach(function(i){i.addEventListener("change",function(){sel[i.value]=i.checked;renderLists();calc()})});
-}
+ renderTiles();renderCats()}
 var STORE_KEY="rs_profile_v1",LAST_KEY="rs_last_order_v1";
 function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -184,9 +222,9 @@ function lsDel(k){try{localStorage.removeItem(k)}catch(e){}}
 function loadProfile(){var p=lsGet(STORE_KEY);if(!p)return;$("name").value=p.name||"";$("phone").value=p.phone||"";$("addr").value=p.addr||"";$("inst").value=p.inst||"";if(p.comm)$("comm").value=p.comm}
 function saveProfile(){var p={name:$("name").value,phone:$("phone").value,addr:$("addr").value,inst:$("inst").value,comm:$("comm").value};if(p.name||p.phone||p.addr||p.inst||p.comm)lsSet(STORE_KEY,p)}
 function selNames(o){return o?Object.keys(o).filter(function(k){return o[k]}):[]}
-function saveLast(){if(!selNames(sel).length)return;var d=checked("day");lsSet(LAST_KEY,{sel:sel,lists:lists,buds:buds,modes:modes,pcount:pcount,vol:$("vol").value,day:d?d.value:"Tuesday",comm:$("comm").value,when:Date.now()})}
+function saveLast(){if(!selNames(sel).length)return;var d=checked("day");lsSet(LAST_KEY,{cart:cart,sel:sel,lists:lists,buds:buds,modes:modes,pcount:pcount,vol:$("vol").value,day:d?d.value:"Tuesday",comm:$("comm").value,when:Date.now()})}
 function showRepeat(){var o=lsGet(LAST_KEY),box=$("repeat"),n=selNames(o&&o.sel);if(!n.length){box.style.display="none";return}box.style.display="block";$("repBtn").textContent=T[lang].repeat+" ("+n.join(", ")+")"}
-function repeatLast(){var o=lsGet(LAST_KEY);if(!o)return;sel=o.sel||{};lists=o.lists||{};buds=o.buds||{};modes=o.modes||{};pcount=o.pcount||{};if(o.comm)$("comm").value=o.comm;if(o.vol)$("vol").value=o.vol;q('input[name="day"]').forEach(function(r){r.checked=(r.value===o.day)});tiles();renderLists();calc();window.scrollTo(0,0)}
+function repeatLast(){var o=lsGet(LAST_KEY);if(!o)return;sel=o.sel||{};cart=o.cart||{};lists=o.lists||{};buds=o.buds||{};modes=o.modes||{};pcount=o.pcount||{};if(o.comm)$("comm").value=o.comm;if(o.vol)$("vol").value=o.vol;q('input[name="day"]').forEach(function(r){r.checked=(r.value===o.day)});active="";tiles();renderLists();calc();showTab("cart")}
 function forgetAll(){lsDel(STORE_KEY);lsDel(LAST_KEY);["name","phone","addr","inst"].forEach(function(i){$(i).value=""});$("comm").value="";calc()}
 function laNow(){return new Date(new Date().toLocaleString("en-US",{timeZone:"America/Los_Angeles"}))}
 function nextDate(w){var n=laNow();for(var i=0;i<15;i++){var d=new Date(n.getFullYear(),n.getMonth(),n.getDate()+i);if(d.getDay()!==w)continue;var cut=new Date(d.getFullYear(),d.getMonth(),d.getDate()-1,18,0,0);if(n<cut)return{d:d,cut:cut}}return null}
@@ -195,7 +233,7 @@ function updateEta(){var el=$("eta");if(!el)return;var r=checked("day"),w=(r&&r.
 var QA=[["Lácteos y huevos","Dairy & eggs",[["Leche","Milk"],["Huevos","Eggs"],["Queso","Cheese"],["Mantequilla","Butter"],["Yogur","Yogurt"]]],["Frutas y verduras","Fruits & veggies",[["Manzanas","Apples"],["Plátanos","Bananas"],["Aguacates","Avocados"],["Papas","Potatoes"],["Cebollas","Onions"],["Tomates","Tomatoes"]]],["Carnes","Meat",[["Pollo","Chicken"],["Carne molida","Ground beef"],["Tocino","Bacon"],["Salchichas","Sausage"]]],["Despensa","Pantry",[["Arroz","Rice"],["Frijoles","Beans"],["Pasta","Pasta"],["Aceite","Oil"],["Harina","Flour"],["Pan","Bread"]]],["Limpieza y hogar","Cleaning & home",[["Papel de baño","Toilet paper"],["Toallas de papel","Paper towels"],["Jabón de platos","Dish soap"],["Detergente","Laundry detergent"]]]];
 function qaHtml(n){var li=lang==="es"?0:1,t=T[lang];return '<details class="qa"><summary>'+t.quick+'</summary><small class="h">'+t.qhint+'</small>'+QA.map(function(c){return '<h4>'+c[li]+'</h4>'+c[2].map(function(i){return '<button type="button" class="c" data-s="'+esc(n)+'" data-q="'+esc(i[li])+'">'+esc(i[li])+'</button>'}).join("")}).join("")+'</details>'}
 var ORDER_URL="https://script.google.com/macros/s/AKfycbyvty6ntdpjep4t1zURh12nEWvGY1Fc_Clazv_shYzPweRuSljpkx3b06_YgbyRLI_v/exec"; // Apps Script web app (ends in /exec)
-var photoData={},sending=false;
+var photoData={},ocrText={},sending=false;
 function photoTotal(){return Object.keys(photoData).reduce(function(a,k){return a+photoData[k].length},0)}
 function thumbs(n){var t=T[lang];return (photoData[n]||[]).map(function(d,i){return '<span class="th"><img alt="" src="'+d+'"><button type="button" data-x="'+esc(n)+'|'+i+'" aria-label="'+t.rm+'">✕</button></span>'}).join("")}
 function setMsg(m,k){var e=$("msg");e.textContent=m||"";e.className="msg"+(m&&k?" "+k:"")}
@@ -205,11 +243,11 @@ function addPhotos(inp){var t=T[lang],st=inp.dataset.f,files=Array.prototype.sli
  files=files.slice(0,Math.max(room,0));if(!files.length){inp.value="";return}
  Promise.all(files.map(shrink)).then(function(arr){photoData[st]=(photoData[st]||[]).concat(arr);renderLists();calc()},function(){setMsg(t.photoErr,"err");inp.value=""})}
 function payload(){
- var names=STORES.map(function(s){return s[0]}).filter(function(n){return sel[n]}),cv=$("comm").value,parts=cv.split("|"),vol=+$("vol").value,total=0,groc=0,hasList=false,needPhoto=false,blocks=[];
- names.forEach(function(nm){var ph=modes[nm]==="photo",c=ph?(parseInt(pcount[nm],10)||0):count(lists[nm]);total+=c;groc+=parseFloat(buds[nm])||0;
-  var b=nm.toUpperCase()+(buds[nm]?" ($"+(parseFloat(buds[nm])||0)+")":"");
-  if(ph){if(!(photoData[nm]||[]).length)needPhoto=true;else hasList=true;b+="\n(lista en foto / list in photo, ~"+c+")"}
-  else{var ls=(lists[nm]||"").split("\n").map(function(x){return x.trim()}).filter(Boolean);if(ls.length)hasList=true;b+="\n"+ls.map(function(x){return "- "+x}).join("\n")}
+ var names=STORES.map(function(s){return s[0]}).filter(function(n){return sel[n]&&has(n)}),cv=$("comm").value,parts=cv.split("|"),vol=+$("vol").value,total=0,groc=0,hasList=false,needPhoto=false,blocks=[];
+ names.forEach(function(nm){var ph=modes[nm]==="photo",c=ph?(parseInt(pcount[nm],10)||0):count(lists[nm])+cq(nm);total+=c;groc+=gv(nm);
+  var b=nm.toUpperCase()+(gv(nm)?" ($"+(Math.round(gv(nm)*100)/100)+")":"");
+  if(ph){if(!(photoData[nm]||[]).length)needPhoto=true;else hasList=true;b+="\n(lista en foto / list in photo, ~"+c+")";var ot=(ocrText[nm]||"").split("\n").map(function(x){return x.trim()}).filter(Boolean);if(ot.length)b+="\n(texto leido de la foto, revisado por cliente / text read from photo, checked by customer):\n"+ot.map(function(x){return "- "+x}).join("\n")}
+  else{var ls=(lists[nm]||"").split("\n").map(function(x){return x.trim()}).filter(Boolean).concat(cartLines(nm));if(ls.length)hasList=true;b+="\n"+ls.map(function(x){return "- "+x}).join("\n")}
   blocks.push(b)});
  var photos=[];names.forEach(function(nm){if(modes[nm]==="photo")(photoData[nm]||[]).forEach(function(d){photos.push({data:d,store:nm})})});
  var ref=checked("ref"),pay=checked("pay"),day=checked("day");
@@ -232,19 +270,71 @@ function send(){
  fetch(ORDER_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(p),signal:ctl?ctl.signal:undefined})
  .then(function(r){return r.json()})
  .then(function(j){end();
-  if(j&&j.ok){saveLast();sel={};lists={};buds={};modes={};pcount={};photoData={};$("spec").value="";$("auth").checked=false;$("consent").checked=false;tiles();renderLists();calc();setMsg(t.sentOk,"ok")}
+  if(j&&j.ok){saveLast();pushHist(p);sel={};cart={};active="";lists={};buds={};modes={};pcount={};photoData={};ocrText={};$("spec").value="";$("auth").checked=false;$("consent").checked=false;tiles();renderLists();calc();setMsg(t.sentOk,"ok");renderHist();var ob=$("okBanner");ob.textContent=t.sentOk;ob.className="msg ok";showTab("orders")}
   else setMsg(t.sentErr+(j&&j.error?" ("+j.error+")":""),"err")},
   function(){end();setMsg(t.sentErr,"err")})}
+
+function cq(n){var o=cart[n]||{};return Object.keys(o).reduce(function(a,k){return a+(o[k]>0?o[k]:0)},0)}
+function ct(n){var o=cart[n]||{};return Object.keys(o).reduce(function(a,k){return a+(o[k]>0?o[k]*CAT[k][6]:0)},0)}
+function cartLines(n){var o=cart[n]||{};return Object.keys(o).filter(function(k){return o[k]>0}).map(function(k){var it=CAT[k],nm=lang==="es"?it[2]:it[3]+" ("+it[2]+")",sz=lang==="es"?it[4]:it[5];return o[k]+" x "+nm+(sz?" ["+sz+"]":"")+" ~"+money(it[6])+" ea"})}
+function fmtShort(d){var p=d.split("-");return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString(lang==="es"?"es-US":"en-US",{month:"short",day:"numeric"})}
+
+var active="",photoPending=false,HIST_KEY="rs_hist_v1",curTot="";
+var EM=["🥛","🥦","🥩","🍞","🧊","🥤","🫙","🧴","🪥","🍼","🩹","🐾"];
+function has(n){return modes[n]==="photo"?(photoData[n]||[]).length>0:(count(lists[n])+cq(n))>0}
+function gv(n){return parseFloat(buds[n])||ct(n)}
+function showTab(id){["shop","cart","order","orders"].forEach(function(k){$("p-"+k).hidden=(k!==id)});q("#nav button").forEach(function(b){b.classList.toggle("on",b.dataset.tab===id)});window.scrollTo(0,0)}
+function chg(n,i,d){var o=cart[n]=cart[n]||{};o[i]=Math.max(0,(o[i]||0)+d);sel[n]=true;renderCats();renderLists();calc()}
+function renderTiles(){var t=T[lang];
+ $("tiles").innerHTML=STORES.map(function(s){var on=active===s[0],b=has(s[0])&&!on;return '<button type="button" class="tile'+(on?" on":"")+'" data-st="'+esc(s[0])+'"><span class="e" aria-hidden="true">'+s[1]+'</span><b>'+esc(s[0])+'</b>'+(on?'<span class="act">Active</span>':(b?'<span class="bd">✓</span>':''))+'</button>'}).join("");
+ q("#tiles button").forEach(function(b){b.addEventListener("click",function(){pickStore(b.dataset.st)})})}
+function pickStore(n){sel[n]=true;active=n;
+ if(photoPending){photoPending=false;modes[n]="photo";$("photoHint").hidden=true;renderTiles();renderCats();renderLists();calc();showTab("cart");return}
+ loadStore(n,function(){renderTiles();renderCats();renderLists();calc();
+ setTimeout(function(){var e=$("catsec");if(e&&e.scrollIntoView)e.scrollIntoView({behavior:"smooth",block:"start"})},50)})}
+function renderCats(){var t=T[lang],li=lang==="es"?0:1;
+ $("catH").textContent=t.hS2+(active?" — "+active:"");
+ if(!active){$("cats").innerHTML="";$("prods").innerHTML='<div class="note">'+t.selHint+'</div>';return}
+ var idx=[];CAT.forEach(function(it,i){if(it[0]===active)idx.push(i)});
+ $("cats").innerHTML=CATS.map(function(c,k){var n=idx.filter(function(i){return CAT[i][1]===c}).length;return '<button type="button" class="ct'+(bcat[active]===c?" on":"")+(n?"":" dim")+'" data-cc="'+esc(c)+'"><span class="e" aria-hidden="true">'+EM[k]+'</span><span>'+esc(lang==="es"?CATS_ES[k]:c)+'</span>'+(n?'<span class="bd">'+n+'</span>':'')+'</button>'}).join("");
+ q("#cats button").forEach(function(b){b.addEventListener("click",function(){bcat[active]=(bcat[active]===b.dataset.cc)?"":b.dataset.cc;shown=60;renderCats();setTimeout(function(){var e=$("prods");if(e&&e.scrollIntoView)e.scrollIntoView({behavior:"smooth",block:"start"})},50)})});
+ var h="";
+ var qq=sq.trim().toLowerCase();$("srch").placeholder=lang==="es"?"Buscar producto (ej. leche)":"Search product (e.g. milk)";
+ if(bcat[active]||qq){var rows=idx.filter(function(i){return qq?(CAT[i][2]+" "+CAT[i][3]).toLowerCase().indexOf(qq)>=0:CAT[i][1]===bcat[active]});var tot=rows.length;rows=rows.slice(0,shown);
+  h+='<h3 style="margin:14px 0 4px">'+esc(qq?(lang==="es"?"Resultados":"Results")+" ("+tot+")":(lang==="es"?CATS_ES[CATS.indexOf(bcat[active])]:bcat[active]))+'</h3><small class="h">'+t.browseHint+'</small>';
+  h+=rows.length?rows.map(function(i){var it=CAT[i],qn=(cart[active]||{})[i]||0;return '<div class="row"><span>'+esc(lang==="es"?it[2]:it[3])+'<small class="sm" style="display:block;color:var(--mute);font-size:13px">'+esc((lang==="es"?it[4]:it[5])||"")+(it[4]?" · ":"")+'≈ '+money(it[6])+' · '+fmtShort(it[7])+(it[8]==="o"?(lang==="es"?" · precio en línea":" · online price"):"")+'</small></span><span class="stp"><button type="button" data-a="'+i+'|-1" aria-label="-">−</button><b>'+qn+'</b><button type="button" data-a="'+i+'|1" aria-label="+">+</button></span></div>'}).join(""):'<div class="note">'+t.noItemsCat+'</div>';if(tot>shown)h+='<button type="button" class="go" id="more">'+(lang==="es"?"Ver más (":"Show more (")+(tot-shown)+')</button>'}
+ h+='<label class="f" for="free">'+t.freeQ+'</label><input type="text" id="free"><button type="button" class="go" id="freeAdd">'+t.freeAdd+'</button><div class="msg" id="freeMsg" role="status"></div>';
+ $("prods").innerHTML=h;
+ q("#prods [data-a]").forEach(function(b){b.addEventListener("click",function(){var x=b.dataset.a.split("|");chg(active,+x[0],+x[1])})});
+ if($("more"))$("more").addEventListener("click",function(){shown+=60;renderCats()});
+ $("freeAdd").addEventListener("click",function(){var v=$("free").value.trim();if(!v)return;modes[active]="text";lists[active]=(lists[active]?lists[active].replace(/\n+$/,"")+"\n":"")+v;sel[active]=true;$("free").value="";renderTiles();renderLists();calc();var m=$("freeMsg");m.textContent=t.freeOk+active;m.className="msg ok"})}
+function cartHtml(n){var o=cart[n]||{},ks=Object.keys(o).filter(function(k){return o[k]>0});if(!ks.length)return "";
+ return ks.map(function(k){var it=CAT[k];return '<div class="row"><span>'+esc(lang==="es"?it[2]:it[3])+'<small style="display:block;color:var(--mute);font-size:13px">≈ '+money(it[6])+' '+esc((lang==="es"?it[4]:it[5])||"")+'</small></span><span class="stp"><button type="button" data-st="'+esc(n)+'" data-a="'+k+'|-1" aria-label="-">−</button><b>'+o[k]+'</b><button type="button" data-st="'+esc(n)+'" data-a="'+k+'|1" aria-label="+">+</button></span></div>'}).join("")}
+function histGet(){return lsGet(HIST_KEY)||[]}
+function pushHist(p){var a=histGet();a.unshift({when:Date.now(),stores:p.stores,count:p.count,est:curTot,day:p.day,list:p.list});lsSet(HIST_KEY,a.slice(0,8))}
+function renderHist(){var t=T[lang],a=histGet();$("hist").innerHTML=a.length?a.map(function(o){return '<div class="hc"><b>'+esc(new Date(o.when).toLocaleString(lang==="es"?"es-US":"en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}))+'</b> · '+esc((o.stores||[]).join(", "))+'<br><small class="h">'+o.count+' '+t.items+' · '+esc(o.day||"")+' · '+esc(o.est||"")+'</small><pre>'+esc(o.list||"")+'</pre></div>'}).join(""):'<p>'+t.noOrders+'</p>'}
+// Optional OCR: Tesseract.js runs in the customer's browser (free); the customer corrects the text, the photo is still sent
+var tessP=null;
+function loadTess(){if(window.Tesseract)return Promise.resolve();if(tessP)return tessP;tessP=new Promise(function(res,rej){var sc=document.createElement("script");sc.src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.1.1/tesseract.min.js";sc.onload=res;sc.onerror=function(){tessP=null;rej(new Error("load"))};document.head.appendChild(sc)});return tessP}
+function runOcr(n,btn){var t=T[lang],st=btn.nextElementSibling,imgs=photoData[n]||[];if(!imgs.length)return;btn.disabled=true;st.textContent=t.ocrLoad;
+ loadTess().then(function(){var out=[];return imgs.reduce(function(pr,d,i){return pr.then(function(){return Tesseract.recognize(d,"spa+eng",{logger:function(m){if(m&&m.status==="recognizing text")st.textContent=t.ocrRead+" "+(i+1)+"/"+imgs.length+" "+Math.round((m.progress||0)*100)+"%"}}).then(function(r){out.push(r.data.text||"")})})},Promise.resolve()).then(function(){return out.join("\n")})})
+ .then(function(txt){var ls=txt.split("\n").map(function(x){return x.replace(/^[\s\-\*\u2022\u00b7\d\.\)]+(?=\D)/,"").replace(/[|_~`]+/g," ").replace(/\s+/g," ").trim()}).filter(function(x){return x.length>1&&/[A-Za-z\u00c0-\u00ff]{2}/.test(x)});
+  ocrText[n]=ls.join("\n");if(ls.length&&!(+pcount[n]>0))pcount[n]=String(ls.length);renderLists();calc();var ta=document.querySelector('#lists textarea[data-o="'+n+'"]');if(ta)ta.focus()})
+ .catch(function(){btn.disabled=false;st.textContent=t.ocrErr})}
 function renderLists(){
  var t=T[lang];
+ if(!selNames(sel).length){$("lists").innerHTML='<p>'+t.cartEmpty+'</p><button type="button" class="go" id="goShop">'+t.goShop+'</button>';$("goShop").addEventListener("click",function(){showTab("shop")});return}
  $("lists").innerHTML=STORES.filter(function(s){return sel[s[0]]}).map(function(s,k){var n=s[0],ph=modes[n]==="photo";
-  return '<div class="store"><header><h3>'+s[1]+' '+n+'</h3><small id="c-'+k+'"></small></header>'+
+  return '<div class="store"><header><h3>'+s[1]+' '+n+'</h3><small id="c-'+k+'"></small></header><button type="button" class="lnk" data-rm="'+esc(n)+'">✕ '+t.rmStore+'</button>'+
   '<div class="chips"><label><input type="radio" name="m'+k+'" value="text" data-m="'+esc(n)+'"'+(ph?"":" checked")+'><span>'+t.modeW+'</span></label><label><input type="radio" name="m'+k+'" value="photo" data-m="'+esc(n)+'"'+(ph?" checked":"")+'><span>'+t.modeP+'</span></label></div>'+
-  (ph?'<label class="f">'+t.photoN+'</label><input type="number" inputmode="numeric" min="0" data-p="'+esc(n)+'" value="'+esc(pcount[n]||"")+'"><div class="note">'+t.photoNote+'</div><label class="f">'+t.addPhoto+'</label><input type="file" accept="image/*" multiple data-f="'+esc(n)+'"><div>'+thumbs(n)+'</div>'
-    :'<label class="f">'+t.listLbl+'</label><textarea data-s="'+esc(n)+'" placeholder="'+esc(t.ph)+'">'+esc(lists[n]||"")+'</textarea>'+qaHtml(n))+
-  '<label class="f">'+t.budLbl+'</label><input type="number" inputmode="decimal" min="0" data-b="'+esc(n)+'" value="'+esc(buds[n]||"")+'"></div>'}).join("");
+  (ph?'<label class="f">'+t.photoN+'</label><input type="number" inputmode="numeric" min="0" data-p="'+esc(n)+'" value="'+esc(pcount[n]||"")+'"><div class="note">'+t.photoNote+'</div><label class="f">'+t.addPhoto+'</label><input type="file" accept="image/*" multiple data-f="'+esc(n)+'"><div>'+thumbs(n)+'</div>'+((photoData[n]||[]).length?'<button type="button" class="go" data-ocr="'+esc(n)+'">'+t.ocrBtn+'</button><small class="h" id="ocrs-'+k+'">'+t.ocrHint+'</small><textarea data-o="'+esc(n)+'" placeholder="'+esc(t.ocrPh)+'">'+esc(ocrText[n]||"")+'</textarea>':'')
+    :cartHtml(n)+'<label class="f">'+t.listLbl+'</label><textarea data-s="'+esc(n)+'" placeholder="'+esc(t.ph)+'">'+esc(lists[n]||"")+'</textarea>'+qaHtml(n))+
+  '<label class="f">'+t.budLbl+'</label><input type="number" inputmode="decimal" min="0" data-b="'+esc(n)+'" placeholder="'+esc(ct(n)?ct(n).toFixed(2):"")+'" value="'+esc(buds[n]||"")+'"></div>'}).join("");
+ q("#lists [data-a]").forEach(function(b){b.addEventListener("click",function(){var x=b.dataset.a.split("|");chg(b.dataset.st,+x[0],+x[1])})});
+ q("#lists [data-rm]").forEach(function(b){b.addEventListener("click",function(){var n=b.dataset.rm;sel[n]=false;[cart,lists,modes,photoData,buds,pcount,ocrText].forEach(function(o){delete o[n]});if(active===n)active="";renderTiles();renderCats();renderLists();calc()})});
  q("#lists input[data-m]").forEach(function(a){a.addEventListener("change",function(){modes[a.dataset.m]=a.value;renderLists();calc()})});
- q("#lists textarea").forEach(function(a){a.addEventListener("input",function(){lists[a.dataset.s]=a.value;calc()})});
+ q("#lists textarea").forEach(function(a){a.addEventListener("input",function(){if(a.dataset.o!==undefined)ocrText[a.dataset.o]=a.value;else lists[a.dataset.s]=a.value;calc()})});
+ q("#lists [data-ocr]").forEach(function(b){b.addEventListener("click",function(){runOcr(b.dataset.ocr,b)})});
  q("#lists input[data-p]").forEach(function(a){a.addEventListener("input",function(){pcount[a.dataset.p]=a.value;calc()})});
  q("#lists input[data-f]").forEach(function(a){a.addEventListener("change",function(){addPhotos(a)})});
  q("#lists button[data-x]").forEach(function(b){b.addEventListener("click",function(){var x=b.dataset.x.split("|"),arr=photoData[x[0]]||[];arr.splice(+x[1],1);renderLists();calc()})});
@@ -256,9 +346,10 @@ function text(){var t=T[lang];
  $("lang").textContent=t.lang;$("copy").textContent=t.copy;$("wa").textContent=t.wa;document.documentElement.lang=lang;
 }
 function calc(){
- var t=T[lang],S=t.S,names=STORES.map(function(s){return s[0]}).filter(function(n){return sel[n]});
+ var t=T[lang],S=t.S,names=STORES.map(function(s){return s[0]}).filter(function(n){return sel[n]&&has(n)});
  var n=names.length,storeFee=n>=3?15:n===2?10:0,total=0,groc=0;
- names.forEach(function(nm,k){var c=modes[nm]==="photo"?(parseInt(pcount[nm],10)||0):count(lists[nm]);total+=c;groc+=parseFloat(buds[nm])||0;var el=$("c-"+k);if(el)el.textContent=c+" "+t.items});
+ names.forEach(function(nm,k){var c=modes[nm]==="photo"?(parseInt(pcount[nm],10)||0):count(lists[nm])+cq(nm);total+=c;groc+=gv(nm)});
+ STORES.filter(function(s){return sel[s[0]]}).forEach(function(s,k){var el=$("c-"+k),nm=s[0],c=modes[nm]==="photo"?(parseInt(pcount[nm],10)||0):count(lists[nm])+cq(nm);if(el)el.textContent=c+" "+t.items});
  var cv=$("comm").value,parts=cv.split("|"),zone=(cv===""||cv==="x")?null:+parts[1],commName=cv==="x"?t.otherC:parts[0]||"-";
  var base=zone?BASE[zone]:null,vol=+$("vol").value,xl=vol===2,large=(!xl&&(total>25||vol===1))?15:0;
  var svc=(base===null||xl||n===0)?null:base+storeFee+large;
@@ -269,28 +360,33 @@ function calc(){
  '<div class="row"><span>'+t.large+' ('+total+' '+t.items+')</span><span>'+(xl?t.quote:money(large))+'</span></div>'+
  '<div class="row total"><span>'+t.total+'</span><span>'+tot+'</span></div>';
  if(xl)r+='<div class="note">'+t.xl+'</div>'; else if(base===null)r+='<div class="note">'+t.cz+'</div>';
- $("out").innerHTML=r;
+ curTot=tot;$("out").innerHTML=r;var bd=$("badge"),all=0;names.forEach(function(nm){all+=(modes[nm]==="photo"?(parseInt(pcount[nm],10)||1):count(lists[nm])+cq(nm))});bd.textContent=all;bd.hidden=!all;
  var L=["REDWOOD SHOPPER","",S.n+": "+($("name").value||"-"),S.p+": "+($("phone").value||"-"),S.a+": "+($("addr").value||"-"),S.c+": "+commName+(zone?" (Zone "+zone+")":""),S.d+": "+label(checked("day")),S.pay+": "+label(checked("pay")),
   $("auth").checked?S.auth:S.noauth,S.ref+": "+label(checked("ref"))];
  if($("inst").value)L.push(S.inst+": "+$("inst").value); if($("spec").value)L.push(S.spec+": "+$("spec").value);
  L.push("","== "+S.list+" ==");
- names.forEach(function(nm){L.push("",nm.toUpperCase()+(buds[nm]?" ("+money(parseFloat(buds[nm])||0)+")":""));if(modes[nm]==="photo"){L.push(t.photoSum+" (~"+(parseInt(pcount[nm],10)||0)+" "+t.items+")")}else{(lists[nm]||"").split("\n").forEach(function(x){if(x.trim())L.push("- "+x.trim())})}});
+ names.forEach(function(nm){L.push("",nm.toUpperCase()+(gv(nm)?" ("+money(gv(nm))+")":""));if(modes[nm]==="photo"){L.push(t.photoSum+" (~"+(parseInt(pcount[nm],10)||0)+" "+t.items+")")}else{(lists[nm]||"").split("\n").forEach(function(x){if(x.trim())L.push("- "+x.trim())});cartLines(nm).forEach(function(x){L.push("- "+x)})}});
  L.push("","== "+S.fees+" ==",t.groc+": "+money(groc),t.zone+" "+(zone||"")+": "+(base===null?t.confirm:money(base)),t.stores+" ("+n+"): "+money(storeFee),t.large+": "+(xl?t.quote:money(large)),t.total+": "+tot);
  $("sum").value=L.join("\n");
  if(WHATSAPP){$("wa").style.display="block";$("wa").href="https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent($("sum").value)}
  updateEta();saveProfile();showRepeat();
 }
-$("lang").addEventListener("click",function(){lang=lang==="es"?"en":"es";text();renderLists();calc()});
+$("lang").addEventListener("click",function(){lang=lang==="es"?"en":"es";text();renderTiles();renderCats();renderLists();renderHist();calc()});
 ["comm","vol","name","phone","addr","inst","spec","auth"].forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
 q('input[type="radio"]').forEach(function(r){r.addEventListener("change",calc)});
 $("copy").addEventListener("click",function(){var b=$("copy"),x=$("sum").value;
  function ok(){saveLast();b.textContent=T[lang].copied;setTimeout(function(){b.textContent=T[lang].copy},1500)}
  function fb(){try{$("sum").select();document.execCommand("copy");ok()}catch(e){}}
  try{navigator.clipboard.writeText(x).then(ok,fb)}catch(e){fb()}});
-loadProfile();text();tiles();renderLists();calc();
+loadProfile();text();tiles();renderLists();calc();renderHist();showTab("shop");
+q("#nav button").forEach(function(b){b.addEventListener("click",function(){showTab(b.dataset.tab)})});
+$("upBtn").addEventListener("click",function(){photoPending=true;$("photoHint").hidden=false;showTab("shop");var e=$("tiles");if(e&&e.scrollIntoView)e.scrollIntoView({behavior:"smooth",block:"center"})});
 if(!ORDER_URL)$("sendBox").style.display="none";
 $("send").addEventListener("click",send);
 $("wa").addEventListener("click",saveLast);$("repBtn").addEventListener("click",repeatLast);$("forget").addEventListener("click",forgetAll);
+
+$("srch").addEventListener("input",function(){sq=this.value;shown=60;renderCats()});
+renderTiles();renderCats();
 </script>
 </body>
 </html>
