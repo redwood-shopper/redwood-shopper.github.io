@@ -31,6 +31,7 @@ textarea{min-height:110px;resize:vertical}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chips label,.opt{border:2px solid var(--line);border-radius:10px;padding:10px 14px;min-height:44px;cursor:pointer;display:flex;align-items:center;background:var(--bg)}
 .opt{margin-top:8px}
+.addcard{display:flex;gap:12px;align-items:flex-start;background:#fff7e0;border:2px solid #e3b341;border-radius:16px;padding:14px 16px;margin:0 0 16px}.addcard .ic{font-size:26px;line-height:1}.addcard .chk span{font-weight:700}.addcard:has(input:checked){background:#e6f4ea;border-color:var(--green)}
 .chk{display:flex;gap:10px;align-items:flex-start;margin-top:8px}
 .chk input{width:22px;height:22px;accent-color:var(--green);flex:none;margin-top:2px}
 .store{border-top:1px dashed var(--line);margin-top:14px;padding-top:12px}
@@ -75,6 +76,12 @@ main{padding-bottom:100px}
 #nav button.on{background:var(--green);color:var(--on)}
 #nav .ic{font-size:22px;line-height:1.1}
 #badge{position:absolute;top:2px;right:18%;background:var(--gold);color:#fff;border-radius:999px;font:700 11px system-ui;padding:1px 6px;font-style:normal}
+.addbtn{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:#fff;border:2px solid var(--gold);border-radius:14px;padding:12px 14px;margin:0 0 14px;cursor:pointer;font:inherit;color:var(--ink);min-height:64px}
+.addbtn .ic{font-size:26px}.addbtn .tx{flex:1}.addbtn b{display:block;font-size:16px}.addbtn small{display:block;color:#5b6b60;font-size:13px;margin-top:2px}
+.addbtn .sw{flex:none;width:52px;height:30px;border-radius:15px;background:#cfd6d1;position:relative;transition:background .2s}
+.addbtn .sw i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0004;transition:left .2s}
+.addbtn.on{background:#e6f4ea;border-color:var(--green)}.addbtn.on .sw{background:var(--green)}.addbtn.on .sw i{left:25px}
+.okn{background:#e6f4ea!important;color:#1d5c3b!important;font-weight:700}
 .ban{display:flex;gap:12px;align-items:center;background:var(--warn-bg);color:var(--warn);border:1px solid var(--gold);border-radius:12px;padding:12px;margin-bottom:14px}
 .ban .ic{font-size:28px}.ban small{display:block}
 .ban button{margin-left:auto;flex:none;border:0;border-radius:10px;background:var(--gold);color:#fff;font:700 14px system-ui;min-height:44px;padding:0 14px;cursor:pointer}
@@ -88,6 +95,15 @@ button.tile,button.ct{font:inherit;color:var(--ink);text-align:left;width:100%}
 .tile.on .act{background:var(--on);color:var(--green)}
 .hc{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:10px;background:var(--bg)}
 .hc pre{white-space:pre-wrap;font:13px/1.4 ui-monospace,Menlo,monospace;margin:6px 0 0}
+.tile.sel{border-color:var(--green);background:#e6f4ea}
+.store{border:2px solid var(--line)!important;border-radius:14px;padding:14px!important;margin-top:14px!important;background:#fff}
+.store .sh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.store .sh h3{margin:0;font-size:18px}.store .sh small{margin-left:2px}
+.store .num{flex:none;width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;font:700 15px system-ui;display:flex;align-items:center;justify-content:center}
+.store .rmb{margin-left:auto;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:0 12px;min-height:36px;font:600 13px system-ui;color:var(--mute);cursor:pointer}
+.qa>summary{list-style:none;display:flex;align-items:center;gap:8px;border:2px dashed var(--green);border-radius:12px;min-height:48px;padding:0 14px;color:var(--green);font-weight:700;cursor:pointer;margin-top:12px}
+.qa>summary::-webkit-details-marker{display:none}.qa>summary::before{content:"＋"}
+.hint{background:#e6f4ea;color:#1d5c3b;border:2px solid var(--green);font-weight:700;font-size:16px;margin:8px 0 12px}
 </style>
 </head>
 <body>
@@ -95,9 +111,10 @@ button.tile,button.ct{font:inherit;color:var(--ink);text-align:left;width:100%}
 <header><div><h1>Redwood Shopper</h1><p data-t="tag"></p></div><button id="lang" type="button"></button></header>
 <div class="pane" id="p-shop">
  <div class="ban"><span class="ic" aria-hidden="true">📷</span><div><b data-t="banT"></b><small data-t="banS"></small></div><button type="button" id="upBtn" data-t="upBtn"></button></div>
- <div class="note" id="photoHint" data-t="photoHint" hidden></div>
- <section><h2 data-t="hS1"></h2><div class="grid" id="tiles"></div></section>
+ <section><h2 data-t="hS1"></h2><small class="h" data-t="hS1h"></small><div class="note hint" id="photoHint" data-t="photoHint" hidden></div><div class="grid" id="tiles"></div></section>
  <section id="catsec"><h2 id="catH"></h2><div class="grid" id="cats"></div><input type="search" id="srch" autocomplete="off" style="margin-top:12px"><div id="prods"></div></section>
+ <button type="button" id="addBtn" class="addbtn" aria-pressed="false"><span class="ic" aria-hidden="true">➕</span><span class="tx"><b data-t="addBtnT"></b><small data-t="addBtnS"></small></span><span class="sw" aria-hidden="true"><i></i></span></button>
+ <input type="checkbox" id="addon" hidden>
 </div>
 <div class="pane" id="p-cart" hidden>
  <section><h2 data-t="hCart"></h2><div id="lists"></div></section>
@@ -111,6 +128,7 @@ button.tile,button.ct{font:inherit;color:var(--ink);text-align:left;width:100%}
 </section>
 </div>
 <div class="pane" id="p-order" hidden>
+ <div class="note okn" id="addNote" data-t="addOn" hidden></div>
  <section>
  <h2 data-t="h1"></h2>
  <label class="f" for="comm" data-t="lComm"></label>
@@ -149,8 +167,6 @@ button.tile,button.ct{font:inherit;color:var(--ink);text-align:left;width:100%}
  <small class="h" data-t="sumHelp"></small>
  <textarea id="sum" readonly style="margin-top:10px"></textarea>
  <div id="sendBox">
-  <label class="chk"><input type="checkbox" id="addon"><span data-t="addon"></span></label>
-  <small class="h" data-t="addonHint"></small>
   <label class="chk"><input type="checkbox" id="consent"><span data-t="consent"></span></label>
   <div style="position:absolute;left:-9999px" aria-hidden="true"><input type="text" id="website" tabindex="-1" autocomplete="off"></div>
   <button class="go" id="send" type="button" data-t="send"></button>
@@ -179,7 +195,7 @@ var WHATSAPP = "";
 var STORES=[["CVS","🏪"],["Costco","📦"],["Grocery Outlet","🏷️"],["Safeway","🏬"],["Target","🎯"],["Walgreens","💊"],["Walmart","🏢"],["WinCo","🛒"]];
 var BASE={1:35,2:40,3:45};
 var T={es:{
-tShop:"Tienda",tCart:"Carrito",tOrder:"Pedido",tOrders:"Mis pedidos",banT:"¿Tienes una lista escrita a mano?",banS:"Sube una foto y nosotros hacemos las compras.",upBtn:"Subir foto",photoHint:"Ahora toca la tienda para esta lista.",hS1:"1. Elige tu tienda",hS2:"2. Explora las categorías",selHint:"Elige una tienda arriba para empezar. Cada tienda tiene su propia lista de compras.",hCart:"Tu carrito",cartEmpty:"Tu carrito está vacío. Elige una tienda en Tienda y agrega productos o escribe tu lista.",goShop:"Ir a Tienda",rmStore:"Quitar tienda",noItemsCat:"Aún no hay productos",freeQ:"¿No lo encuentras? Escribe lo que quieres",freeAdd:"Agregar a mi lista",freeOk:"Agregado a tu lista de ",hOrders:"Mis pedidos",noOrders:"Todavía no has enviado pedidos desde este teléfono.",ordersNote:"Confirmamos cada pedido por teléfono o mensaje antes de comprar. Este historial se guarda solo en este teléfono.",prodH:"Productos",tag:"Compras a domicilio en Garberville y el sur del condado de Humboldt.",h1:"Entrega",lEmail:"Correo electrónico (opcional)",lComm:"Comunidad de entrega",pick:"Elige tu comunidad",otherC:"Otra comunidad (confirmaremos la zona)",lDay:"Día de entrega",tue:"Martes",fri:"Viernes",
+tShop:"Tienda",tCart:"Carrito",tOrder:"Pedido",tOrders:"Mis pedidos",banT:"¿Tienes una lista escrita a mano?",banS:"Elige la tienda y toma la foto de tu lista. Nosotros hacemos las compras.",upBtn:"Subir foto de mi lista",photoHint:"👇 Paso 1: toca la tienda de tu lista. Después podrás tomar la foto.",photoMore:"¿Tienes otra lista de otra tienda? Vuelve a Tienda, elige esa tienda y sube su foto.",hS1:"1. Elige tus tiendas",hS1h:"Puedes elegir más de una. Toca una tienda para agregarla; toca otra para ver sus productos. Tus tiendas elegidas quedan marcadas con ✓.",tView:"Viendo",tChosen:"✓ Elegida",storeN:"Tienda",hS2:"2. Explora las categorías",selHint:"Elige una tienda arriba para empezar. Cada tienda tiene su propia lista de compras.",hCart:"Tu carrito",cartEmpty:"Tu carrito está vacío. Elige una tienda en Tienda y agrega productos o escribe tu lista.",goShop:"Ir a Tienda",rmStore:"Quitar tienda",noItemsCat:"Aún no hay productos",freeQ:"¿No lo encuentras? Escribe lo que quieres",freeAdd:"Agregar a mi lista",freeOk:"Agregado a tu lista de ",hOrders:"Mis pedidos",noOrders:"Todavía no has enviado pedidos desde este teléfono.",ordersNote:"Confirmamos cada pedido por teléfono o mensaje antes de comprar. Este historial se guarda solo en este teléfono.",prodH:"Productos",tag:"Compras a domicilio en Garberville y el sur del condado de Humboldt.",h1:"Entrega",lEmail:"Correo electrónico (opcional)",lComm:"Comunidad de entrega",pick:"Elige tu comunidad",otherC:"Otra comunidad (confirmaremos la zona)",lDay:"Día de entrega",tue:"Martes",fri:"Viernes",
 cutoff:"Entregamos martes y viernes. Pide antes de las 6 PM de la noche anterior.",h2:"2. Tiendas y lista de compras",storeHelp:"Toca cada tienda donde quieres que compremos y escribe tu lista, un artículo por línea. Todo se junta en un solo pedido.",
 h3:"Costo estimado",lVol:"Tamaño total del pedido",v0:"Normal",v1:"Grande (Large)",v2:"Extra grande (Extra Large)",
 n1:"Cualquier cargo adicional se te comunicará y deberás aprobarlo antes de que compremos.",
@@ -187,13 +203,13 @@ h4:"Tus datos",lName:"Nombre completo",lPhone:"Teléfono",lAddr:"Dirección de e
 payNote:"El pago se necesita antes de comprar. Te contactaremos para coordinarlo. Esta página no procesa pagos.",
 auth:"Autorizo hasta $20 sobre mi presupuesto, solo para productos y sin contactarme antes.",lRef:"Si falta un producto o hay un ajuste de precio, prefiero:",
 r1:"Reembolso al pago original",r2:"Crédito para mi próximo pedido",r3:"Reembolso en efectivo",r4:"Contáctenme para decidir",lSpec:"Instrucciones especiales (alergias, sustituciones, marcas)",
-h5:"Revisar y enviar",sumHelp:"Revisa tu pedido y presiona Enviar. Revisaremos y confirmaremos tu pedido antes de comprar.",addon:"Es un agregado a mi pedido anterior",addonHint:"Márcalo si ya enviaste un pedido y esto es lo que faltó. Lo juntaremos con tu pedido anterior.",consent:"Confirmo que mi pedido es correcto y entiendo que el pago se necesita antes de que compren.",send:"Enviar mi pedido",sending:"Enviando… no cierres esta página.",sentOk:"¡Pedido recibido! Te contactaremos para confirmar el costo y el pago antes de comprar.",sentErr:"No se pudo enviar. Revisa tu conexión e inténtalo otra vez, o copia el resumen y envíalo por mensaje.",needInfo:"Falta tu nombre, teléfono, dirección o comunidad.",needList:"Escribe tu lista o agrega la foto de cada tienda.",needPhoto:"Agrega la foto de tu lista.",needConsent:"Marca la casilla para confirmar tu pedido.",longList:"Tu lista es demasiado larga. Acórtala o envía una foto.",addPhoto:"Foto de tu lista (máximo 3 en total)",takePhoto:"Tomar foto ahora",pickPhoto:"Elegir de mi galería",photoErr:"No pude leer esa foto. Prueba con otra.",maxPhotos:"Máximo 3 fotos por pedido.",rm:"Quitar foto",copy:"Solo copiar el resumen",copied:"Copiado",wa:"Enviar por WhatsApp",
+h5:"Revisar y enviar",sumHelp:"Revisa tu pedido y presiona Enviar. Revisaremos y confirmaremos tu pedido antes de comprar.",addBtnT:"Agregar a mi pedido anterior",addBtnS:"¿Olvidaste algo? Actívalo y lo juntamos con tu pedido anterior.",addOn:"✓ Esto se enviará como AGREGADO a tu pedido anterior.",addon:"Es un agregado a mi pedido anterior",addonHint:"Márcalo si ya enviaste un pedido y esto es lo que faltó. Lo juntaremos con tu pedido anterior.",consent:"Confirmo que mi pedido es correcto y entiendo que el pago se necesita antes de que compren.",send:"Enviar mi pedido",sending:"Enviando… no cierres esta página.",sentOk:"¡Pedido recibido! Te contactaremos para confirmar el costo y el pago antes de comprar.",sentErr:"No se pudo enviar. Revisa tu conexión e inténtalo otra vez, o copia el resumen y envíalo por mensaje.",needInfo:"Falta tu nombre, teléfono, dirección o comunidad.",needList:"Escribe tu lista o agrega la foto de cada tienda.",needPhoto:"Agrega la foto de tu lista.",needConsent:"Marca la casilla para confirmar tu pedido.",longList:"Tu lista es demasiado larga. Acórtala o envía una foto.",addPhoto:"Foto de tu lista (máximo 3 en total)",takePhoto:"Tomar foto ahora",pickPhoto:"Elegir de mi galería",photoErr:"No pude leer esa foto. Prueba con otra.",maxPhotos:"Máximo 3 fotos por pedido.",rm:"Quitar foto",copy:"Solo copiar el resumen",copied:"Copiado",wa:"Enviar por WhatsApp",
 listLbl:"Tu lista (un artículo por línea)",browse:"Ver productos y precios",browseHint:"Elige una categoría y agrega productos. Los precios son aproximados, de nuestra última compra en la fecha indicada, y pueden cambiar.",picked:"Productos elegidos",estP:"Estimado",useBud:"Usar como presupuesto",noCat:"Todavía no hay productos de esta tienda. Escribe tu lista arriba.",repeat:"Repetir mi último pedido",forget:"Borrar mis datos guardados en este teléfono",saveNote:"Guardamos tus datos solo en este teléfono para que no los escribas otra vez.",quick:"Agregar rápido",qhint:"Toca para agregar; luego puedes cambiar la cantidad.",eta1:"Si eliges este día, tu próxima entrega es el ",eta2:". Pide antes del ",eta3:", 6 PM (hora del Pacífico).",n2:"Puedes autorizar hasta $20 más solo para productos, nunca para cargos de servicio. Si sobra dinero, lo devolvemos o lo dejamos como crédito, según lo que elijas.",modeW:"Escribir mi lista",modeP:"Enviar foto de mi lista",photoN:"Cantidad aproximada de artículos en la foto",photoNote:"Toma la foto con buena luz y letra clara. Se envía junto con tu pedido.",photoSum:"FOTO de la lista (adjunta al pedido)",budLbl:"Presupuesto de esta tienda ($). Déjalo vacío para usar el estimado de los productos",items:"artículos",ph:"leche\nhuevos\npan",
 groc:"Productos (estimado)",zone:"Entrega, zona",stores:"Tiendas adicionales",large:"Pedido grande",total:"Total a pagar antes de comprar",quote:"Cotización especial",confirm:"Por confirmar",
 xl:"Un pedido Extra grande necesita cotización especial. Te escribiremos con el precio antes de comprar.",cz:"Confirmaremos tu zona y el costo de entrega antes de comprar.",
 none:"Agrega al menos un producto o lista",lang:"English",S:{n:"Nombre",p:"Teléfono",a:"Dirección",c:"Comunidad",d:"Día",pay:"Pago",auth:"Autoriza hasta $20 extra solo para productos",noauth:"No autoriza extra sin contactarlo",ref:"Si falta algo",inst:"Entrega",spec:"Especial",list:"LISTA DE COMPRAS",fees:"COSTO ESTIMADO"}},
 en:{
-tShop:"Shop",tCart:"Cart",tOrder:"Order",tOrders:"My Orders",banT:"Have a handwritten list?",banS:"Upload a photo and we'll do the shopping.",upBtn:"Upload Photo",photoHint:"Now tap the store this list is for.",hS1:"1. Choose your store",hS2:"2. Browse categories",selHint:"Select a store above to start browsing. Each store has its own shopping list.",hCart:"Your cart",cartEmpty:"Your cart is empty. Choose a store in Shop, then add products or write your list.",goShop:"Go to Shop",rmStore:"Remove store",noItemsCat:"No products yet",freeQ:"Can't find it? Type what you want",freeAdd:"Add to my list",freeOk:"Added to your list for ",hOrders:"My orders",noOrders:"No orders sent from this phone yet.",ordersNote:"We confirm each order by phone or text before shopping. This history is saved only on this phone.",prodH:"Products",tag:"Grocery delivery in Garberville and Southern Humboldt County.",h1:"Delivery",lEmail:"Email (optional)",lComm:"Delivery community",pick:"Choose your community",otherC:"Other community (we will confirm the zone)",lDay:"Delivery day",tue:"Tuesday",fri:"Friday",
+tShop:"Shop",tCart:"Cart",tOrder:"Order",tOrders:"My Orders",banT:"Have a handwritten list?",banS:"Pick the store and take a photo of your list. We do the shopping.",upBtn:"Upload my list photo",photoHint:"👇 Step 1: tap the store your list is for. Then you can take the photo.",photoMore:"Have another list for another store? Go back to Shop, choose that store and upload its photo.",hS1:"1. Choose your stores",hS1h:"You can choose more than one. Tap a store to add it; tap another to see its products. Chosen stores stay marked with ✓.",tView:"Viewing",tChosen:"✓ Chosen",storeN:"Store",hS2:"2. Browse categories",selHint:"Select a store above to start browsing. Each store has its own shopping list.",hCart:"Your cart",cartEmpty:"Your cart is empty. Choose a store in Shop, then add products or write your list.",goShop:"Go to Shop",rmStore:"Remove store",noItemsCat:"No products yet",freeQ:"Can't find it? Type what you want",freeAdd:"Add to my list",freeOk:"Added to your list for ",hOrders:"My orders",noOrders:"No orders sent from this phone yet.",ordersNote:"We confirm each order by phone or text before shopping. This history is saved only on this phone.",prodH:"Products",tag:"Grocery delivery in Garberville and Southern Humboldt County.",h1:"Delivery",lEmail:"Email (optional)",lComm:"Delivery community",pick:"Choose your community",otherC:"Other community (we will confirm the zone)",lDay:"Delivery day",tue:"Tuesday",fri:"Friday",
 cutoff:"We deliver Tuesday and Friday. Order by 6 PM the evening before.",h2:"2. Stores and shopping list",storeHelp:"Tap each store you want us to shop at and write your list, one item per line. Everything is combined into one order.",
 h3:"Estimated cost",lVol:"Total order size",v0:"Normal",v1:"Large",v2:"Extra Large",
 n1:"Any extra charge will be shared with you and needs your approval before we shop.",
@@ -201,7 +217,7 @@ h4:"Your details",lName:"Full name",lPhone:"Phone number",lAddr:"Delivery addres
 payNote:"Payment is required before shopping. We will contact you to arrange it. This page does not process payments.",
 auth:"I authorize up to $20 over my budget, for groceries only, without contacting me first.",lRef:"If an item is unavailable or a price adjustment is needed, I prefer:",
 r1:"Refund to original payment",r2:"Credit toward next order",r3:"Cash refund",r4:"Contact me to discuss",lSpec:"Special instructions (allergies, substitutions, brands)",
-h5:"Review and send",sumHelp:"Check your order and press Send. We will review and confirm your order before shopping.",addon:"This is an addition to my earlier order",addonHint:"Check this if you already sent an order and this is what you forgot. We will combine it with your earlier order.",consent:"I confirm my order is correct and I understand payment is required before shopping.",send:"Send my order",sending:"Sending… please keep this page open.",sentOk:"Order received! We will contact you to confirm the cost and payment before shopping.",sentErr:"Could not send. Check your connection and try again, or copy the summary and send it by message.",needInfo:"Your name, phone, address or community is missing.",needList:"Write your list or add a photo for each store.",needPhoto:"Please add a photo of your list.",needConsent:"Check the box to confirm your order.",longList:"Your list is too long. Shorten it or send a photo.",addPhoto:"Photo of your list (3 max in total)",takePhoto:"Take a photo now",pickPhoto:"Choose from my gallery",photoErr:"I could not read that photo. Try another one.",maxPhotos:"Maximum 3 photos per order.",rm:"Remove photo",copy:"Just copy the summary",copied:"Copied",wa:"Send by WhatsApp",
+h5:"Review and send",sumHelp:"Check your order and press Send. We will review and confirm your order before shopping.",addBtnT:"Add to my earlier order",addBtnS:"Forgot something? Turn this on and we will combine it with your earlier order.",addOn:"✓ This will be sent as an ADDITION to your earlier order.",addon:"This is an addition to my earlier order",addonHint:"Check this if you already sent an order and this is what you forgot. We will combine it with your earlier order.",consent:"I confirm my order is correct and I understand payment is required before shopping.",send:"Send my order",sending:"Sending… please keep this page open.",sentOk:"Order received! We will contact you to confirm the cost and payment before shopping.",sentErr:"Could not send. Check your connection and try again, or copy the summary and send it by message.",needInfo:"Your name, phone, address or community is missing.",needList:"Write your list or add a photo for each store.",needPhoto:"Please add a photo of your list.",needConsent:"Check the box to confirm your order.",longList:"Your list is too long. Shorten it or send a photo.",addPhoto:"Photo of your list (3 max in total)",takePhoto:"Take a photo now",pickPhoto:"Choose from my gallery",photoErr:"I could not read that photo. Try another one.",maxPhotos:"Maximum 3 photos per order.",rm:"Remove photo",copy:"Just copy the summary",copied:"Copied",wa:"Send by WhatsApp",
 listLbl:"Your list (one item per line)",browse:"Browse products and prices",browseHint:"Pick a category and add products. Prices are approximate, from our last purchase on the date shown, and can change.",picked:"Selected products",estP:"Estimate",useBud:"Use as budget",noCat:"No products for this store yet. Write your list above.",repeat:"Repeat my last order",forget:"Delete my data saved on this phone",saveNote:"We save your details only on this phone so you do not have to type them again.",quick:"Quick add",qhint:"Tap to add; then you can change the quantity.",eta1:"If you choose this day, your next delivery is ",eta2:". Order before ",eta3:", 6 PM (Pacific time).",n2:"You can authorize up to $20 more for groceries only, never for service fees. If there is money left, we refund it or keep it as credit, as you choose.",modeW:"Write my list",modeP:"Send a photo of my list",photoN:"Approximate number of items in the photo",photoNote:"Take the photo in good light with clear writing. It is sent with your order.",photoSum:"PHOTO of the list (attached to the order)",budLbl:"Budget for this store ($). Leave blank to use the product estimate",items:"items",ph:"milk\neggs\nbread",
 groc:"Groceries (estimate)",zone:"Delivery, zone",stores:"Additional stores",large:"Large order",total:"Total to pay before we shop",quote:"Custom quote",confirm:"To be confirmed",
 xl:"An Extra Large order needs a custom quote. We will contact you with the price before shopping.",cz:"We will confirm your zone and delivery cost before shopping.",
@@ -280,7 +296,7 @@ function send(){
  fetch(ORDER_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(p),signal:ctl?ctl.signal:undefined})
  .then(function(r){return r.json()})
  .then(function(j){end();
-  if(j&&j.ok){saveLast();pushHist(p);sel={};cart={};active="";lists={};buds={};modes={};pcount={};photoData={};$("spec").value="";$("auth").checked=false;$("addon").checked=false;$("consent").checked=false;tiles();renderLists();calc();setMsg(t.sentOk,"ok");renderHist();var ob=$("okBanner");ob.textContent=t.sentOk;ob.className="msg ok";showTab("orders")}
+  if(j&&j.ok){saveLast();pushHist(p);sel={};cart={};active="";lists={};buds={};modes={};pcount={};photoData={};$("spec").value="";$("auth").checked=false;$("addon").checked=false;syncAdd();$("consent").checked=false;tiles();renderLists();calc();setMsg(t.sentOk,"ok");renderHist();var ob=$("okBanner");ob.textContent=t.sentOk;ob.className="msg ok";showTab("orders")}
   else setMsg(t.sentErr+(j&&j.error?" ("+j.error+")":""),"err")},
   function(){end();setMsg(t.sentErr,"err")})}
 
@@ -296,7 +312,7 @@ function gv(n){return parseFloat(buds[n])||ct(n)}
 function showTab(id){["shop","cart","order","orders"].forEach(function(k){$("p-"+k).hidden=(k!==id)});q("#nav button").forEach(function(b){b.classList.toggle("on",b.dataset.tab===id)});window.scrollTo(0,0)}
 function chg(n,i,d){var o=cart[n]=cart[n]||{};o[i]=Math.max(0,(o[i]||0)+d);sel[n]=true;renderCats();renderLists();calc()}
 function renderTiles(){var t=T[lang];
- $("tiles").innerHTML=STORES.map(function(s){var on=active===s[0],b=has(s[0])&&!on;return '<button type="button" class="tile'+(on?" on":"")+'" data-st="'+esc(s[0])+'"><span class="e" aria-hidden="true">'+s[1]+'</span><b>'+esc(s[0])+'</b>'+(on?'<span class="act">Active</span>':(b?'<span class="bd">✓</span>':''))+'</button>'}).join("");
+ $("tiles").innerHTML=STORES.map(function(s){var on=active===s[0],b=!!sel[s[0]]&&!on;return '<button type="button" class="tile'+(on?" on":"")+(b?" sel":"")+'" data-st="'+esc(s[0])+'"><span class="e" aria-hidden="true">'+s[1]+'</span><b>'+esc(s[0])+'</b>'+(on?'<span class="act">'+(sel[s[0]]?"✓ ":"")+t.tView+'</span>':(b?'<span class="bd">'+t.tChosen+'</span>':''))+'</button>'}).join("");
  q("#tiles button").forEach(function(b){b.addEventListener("click",function(){pickStore(b.dataset.st)})})}
 function pickStore(n){sel[n]=true;active=n;
  if(photoPending){photoPending=false;modes[n]="photo";$("photoHint").hidden=true;renderTiles();renderCats();renderLists();calc();showTab("cart");return}
@@ -328,9 +344,9 @@ function renderLists(){
  var t=T[lang];
  if(!selNames(sel).length){$("lists").innerHTML='<p>'+t.cartEmpty+'</p><button type="button" class="go" id="goShop">'+t.goShop+'</button>';$("goShop").addEventListener("click",function(){showTab("shop")});return}
  $("lists").innerHTML=STORES.filter(function(s){return sel[s[0]]}).map(function(s,k){var n=s[0],ph=modes[n]==="photo";
-  return '<div class="store"><header><h3>'+s[1]+' '+n+'</h3><small id="c-'+k+'"></small></header><button type="button" class="lnk" data-rm="'+esc(n)+'">✕ '+t.rmStore+'</button>'+
+  return '<div class="store"><header class="sh"><span class="num">'+(k+1)+'</span><h3>'+s[1]+' '+n+'</h3><small id="c-'+k+'"></small><button type="button" class="rmb" data-rm="'+esc(n)+'">✕ '+t.rmStore+'</button></header>'+
   '<div class="chips"><label><input type="radio" name="m'+k+'" value="text" data-m="'+esc(n)+'"'+(ph?"":" checked")+'><span>'+t.modeW+'</span></label><label><input type="radio" name="m'+k+'" value="photo" data-m="'+esc(n)+'"'+(ph?" checked":"")+'><span>'+t.modeP+'</span></label></div>'+
-  (ph?'<label class="f">'+t.photoN+'</label><input type="number" inputmode="numeric" min="0" data-p="'+esc(n)+'" value="'+esc(pcount[n]||"")+'"><div class="note">'+t.photoNote+'</div><label class="f">'+t.addPhoto+'</label><div class="pbtns"><label class="pbtn main"><span class="pi">📷</span>'+t.takePhoto+'<input type="file" accept="image/*" capture="environment" data-f="'+esc(n)+'"></label><label class="pbtn"><span class="pi">🖼️</span>'+t.pickPhoto+'<input type="file" accept="image/*" multiple data-f="'+esc(n)+'"></label></div><div>'+thumbs(n)+'</div>'
+  (ph?'<label class="f">'+t.photoN+'</label><input type="number" inputmode="numeric" min="0" data-p="'+esc(n)+'" value="'+esc(pcount[n]||"")+'"><div class="note">'+t.photoNote+'</div><div class="note">'+t.photoMore+'</div><label class="f">'+t.addPhoto+'</label><div class="pbtns"><label class="pbtn main"><span class="pi">📷</span>'+t.takePhoto+'<input type="file" accept="image/*" capture="environment" data-f="'+esc(n)+'"></label><label class="pbtn"><span class="pi">🖼️</span>'+t.pickPhoto+'<input type="file" accept="image/*" multiple data-f="'+esc(n)+'"></label></div><div>'+thumbs(n)+'</div>'
     :cartHtml(n)+'<label class="f">'+t.listLbl+'</label><textarea data-s="'+esc(n)+'" placeholder="'+esc(t.ph)+'">'+esc(lists[n]||"")+'</textarea>'+qaHtml(n))+
   '<label class="f">'+t.budLbl+'</label><input type="number" inputmode="decimal" min="0" data-b="'+esc(n)+'" placeholder="'+esc(ct(n)?ct(n).toFixed(2):"")+'" value="'+esc(buds[n]||"")+'"></div>'}).join("");
  q("#lists [data-a]").forEach(function(b){b.addEventListener("click",function(){var x=b.dataset.a.split("|");chg(b.dataset.st,+x[0],+x[1])})});
@@ -382,13 +398,15 @@ $("copy").addEventListener("click",function(){var b=$("copy"),x=$("sum").value;
  try{navigator.clipboard.writeText(x).then(ok,fb)}catch(e){fb()}});
 loadProfile();text();tiles();renderLists();calc();renderHist();showTab("shop");
 q("#nav button").forEach(function(b){b.addEventListener("click",function(){showTab(b.dataset.tab)})});
-$("upBtn").addEventListener("click",function(){photoPending=true;$("photoHint").hidden=false;showTab("shop");var e=$("tiles");if(e&&e.scrollIntoView)e.scrollIntoView({behavior:"smooth",block:"center"})});
+$("upBtn").addEventListener("click",function(){photoPending=true;$("photoHint").hidden=false;showTab("shop");var e=$("photoHint");if(e&&e.scrollIntoView)e.scrollIntoView({behavior:"smooth",block:"start"})});
 if(!ORDER_URL)$("sendBox").style.display="none";
 $("send").addEventListener("click",send);
 $("wa").addEventListener("click",saveLast);$("repBtn").addEventListener("click",repeatLast);$("forget").addEventListener("click",forgetAll);
 
 $("srch").addEventListener("input",function(){sq=this.value;shown=60;renderCats()});
 renderTiles();renderCats();
+function syncAdd(){var on=$("addon").checked;$("addBtn").classList.toggle("on",on);$("addBtn").setAttribute("aria-pressed",on?"true":"false");$("addNote").hidden=!on}
+$("addBtn").addEventListener("click",function(){$("addon").checked=!$("addon").checked;syncAdd()});
 </script>
 </body>
 </html>
