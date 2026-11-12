@@ -528,7 +528,7 @@ function pickStore(n){sel[n]=true;active=n;
  setTimeout(function(){var e=$("catsec");if(e&&e.scrollIntoView)e.scrollIntoView({behavior:"smooth",block:"start"})},50)})}
 var FOTOS={};
 function loadFotos(){}
-function dispName(s){return String(s||"").replace(/\s*\((?:nombre en recibo|receipt name):[^)]*\)/i,"").replace(/\s+-\s+(?:revisar|check)\b.*$/i,"")}
+function dispName(s){return String(s||"").replace(/\s*\((?:nombre en recibo|receipt name):[^)]*\)/i,"").replace(/\s*\((?:confirmado por Aracely)\)/i,"").replace(/\s+-\s+(?:revisar|check)\b.*$/i,"")}
 function fotoOf(store,it){var o=FOTOS[store];return o&&o[it[2]]||null}
 function okFile(f){return /^f-[A-Za-z0-9._-]+\.(?:jpe?g|png|webp)$/i.test(f||"")}
 function renderCats(){var t=T[lang],li=lang==="es"?0:1;
