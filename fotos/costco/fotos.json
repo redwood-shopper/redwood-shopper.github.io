@@ -1,73 +1,216 @@
 {
- "Aidells Salchicha de pollo ahumada, mango picante con jalapeño (nombre en recibo: SPCY MNGO SG)": {
-  "f": "f-aidells-mango.jpg"
- },
- "Silk Leche de almendra orgánica sin azúcar, medio galón, 3 piezas": {
-  "f": "f-silk-almendra-3pk.jpg",
-  "n": "f-silk-almendra-3pk-nut.jpg"
- },
- "Corazones de lechuga romana orgánicos": {
-  "f": "f-romaine-hearts-6ct.jpg"
- },
- "Kirkland Signature Cacahuates súper extra grandes, 2.5 lb": {
-  "f": "f-ks-peanuts-2-5lb.jpg",
-  "n": "f-ks-peanuts-2-5lb-nut.jpg"
- },
- "Agua Kirkland, paquete de 40 (3.99 + 2.00 de depósito CA)": {
-  "f": "f-agua-kirkland-40.jpg"
- },
- "Kirkland Signature Aceite de oliva extra virgen orgánico, 2 L": {
-  "f": "f-evoo-kirkland-2l.jpg"
- },
- "Tortillas de maíz Guerrero 6\"": {
-  "f": "f-guerrero-tortillas.jpg",
-  "n": "f-guerrero-tortillas-nut.jpg"
- },
- "Mandarinas": {
-  "f": "f-mandarinas.jpg"
- },
- "Manzana Gala orgánica": {
-  "f": "f-gala-organica-3lb.jpg"
- },
- "Aguacates Hass orgánicos": {
-  "f": "f-aguacates-organicos.jpg"
- },
- "Bounty Toallas de papel Advanced, 2 capas, 103 hojas, 12 rollos": {
-  "f": "f-bounty-advanced-12.jpg"
- },
- "Kirkland Signature Nueces de castilla, 3 lb (nombre en recibo: KS WALNUTS)": {
-  "f": "f-ks-walnuts-3lb.jpg",
-  "n": "f-ks-walnuts-3lb-nut.jpg"
- },
- "Kirkland Signature Queso Parmigiano Reggiano añejo rallado, 1 lb": {
-  "f": "f-parmigiano-rallado-1lb.jpg",
-  "n": "f-parmigiano-rallado-1lb-nut.jpg"
- },
- "Kirkland Signature Mozzarella fresca, 18 oz, 2 piezas": {
-  "f": "f-mozzarella-fresca-18oz.jpg",
-  "n": "f-mozzarella-fresca-18oz-nut.jpg"
- },
- "Kirkland Signature Queso rallado mezcla estilo mexicano, 2.5 lb, 2 piezas": {
-  "f": "f-queso-mexicano-2-5lb.jpg",
-  "n": "f-queso-mexicano-2-5lb-nut.jpg"
- },
- "Kirkland Signature Queso mozzarella rallado, 2.5 lb, 2 piezas": {
-  "f": "f-mozzarella-rallada-2-5lb.jpg",
-  "n": "f-mozzarella-rallada-2-5lb-nut.jpg"
- },
- "Cello Surtido de quesos premium rebanados, 2 lb": {
-  "f": "f-cello-surtido-2lb.jpg",
-  "n": "f-cello-surtido-2lb-nut.jpg"
- },
- "Kirkland Signature Queso feta griego orgánico, 28.2 oz": {
-  "f": "f-feta-organico-28oz.jpg",
-  "n": "f-feta-organico-28oz-nut.jpg"
- },
- "Emmi Queso Le Gruyère AOP, 1 lb": {
-  "f": "f-gruyere-1lb.jpg",
-  "n": "f-gruyere-1lb-nut.jpg"
- },
- "Finlandia Rebanadas de queso premium, 2 lb": {
-  "f": "f-finlandia-rebanadas-2lb.jpg"
- }
+"Aidells Salchicha de pollo ahumada, mango picante con jalapeño (nombre en recibo: SPCY MNGO SG)": {
+"f": "f-aidells-mango.jpg"
+},
+"Silk Leche de almendra orgánica sin azúcar, medio galón, 3 piezas": {
+"f": "f-silk-almendra-3pk.jpg",
+"n": "f-silk-almendra-3pk-nut.jpg"
+},
+"Corazones de lechuga romana orgánicos": {
+"f": "f-romaine-hearts-6ct.jpg"
+},
+"Kirkland Signature Cacahuates súper extra grandes, 2.5 lb": {
+"f": "f-ks-peanuts-2-5lb.jpg",
+"n": "f-ks-peanuts-2-5lb-nut.jpg"
+},
+"Agua Kirkland, paquete de 40 (3.99 + 2.00 de depósito CA)": {
+"f": "f-agua-kirkland-40.jpg"
+},
+"Kirkland Signature Aceite de oliva extra virgen orgánico, 2 L": {
+"f": "f-evoo-kirkland-2l.jpg"
+},
+"Tortillas de maíz Guerrero 6\"": {
+"f": "f-guerrero-tortillas.jpg",
+"n": "f-guerrero-tortillas-nut.jpg"
+},
+"Mandarinas": {
+"f": "f-mandarinas.jpg"
+},
+"Manzana Gala orgánica": {
+"f": "f-gala-organica-3lb.jpg"
+},
+"Aguacates Hass orgánicos": {
+"f": "f-aguacates-organicos.jpg"
+},
+"Bounty Toallas de papel Advanced, 2 capas, 103 hojas, 12 rollos": {
+"f": "f-bounty-advanced-12.jpg"
+},
+"Kirkland Signature Nueces de castilla, 3 lb (nombre en recibo: KS WALNUTS)": {
+"f": "f-ks-walnuts-3lb.jpg",
+"n": "f-ks-walnuts-3lb-nut.jpg"
+},
+"Kirkland Signature Queso Parmigiano Reggiano añejo rallado, 1 lb": {
+"f": "f-parmigiano-rallado-1lb.jpg",
+"n": "f-parmigiano-rallado-1lb-nut.jpg"
+},
+"Kirkland Signature Mozzarella fresca, 18 oz, 2 piezas": {
+"f": "f-mozzarella-fresca-18oz.jpg",
+"n": "f-mozzarella-fresca-18oz-nut.jpg"
+},
+"Kirkland Signature Queso rallado mezcla estilo mexicano, 2.5 lb, 2 piezas": {
+"f": "f-queso-mexicano-2-5lb.jpg",
+"n": "f-queso-mexicano-2-5lb-nut.jpg"
+},
+"Kirkland Signature Queso mozzarella rallado, 2.5 lb, 2 piezas": {
+"f": "f-mozzarella-rallada-2-5lb.jpg",
+"n": "f-mozzarella-rallada-2-5lb-nut.jpg"
+},
+"Cello Surtido de quesos premium rebanados, 2 lb": {
+"f": "f-cello-surtido-2lb.jpg",
+"n": "f-cello-surtido-2lb-nut.jpg"
+},
+"Kirkland Signature Queso feta griego orgánico, 28.2 oz": {
+"f": "f-feta-organico-28oz.jpg",
+"n": "f-feta-organico-28oz-nut.jpg"
+},
+"Emmi Queso Le Gruyère AOP, 1 lb": {
+"f": "f-gruyere-1lb.jpg",
+"n": "f-gruyere-1lb-nut.jpg"
+},
+"Finlandia Rebanadas de queso premium, 2 lb": {
+"f": "f-finlandia-rebanadas-2lb.jpg"
+},
+"Limón amarillo": {
+"f": "f-limon-amarillo-3lb.jpg"
+},
+"Limón verde (limas)": {
+"f": "f-limon-verde-3lb.jpg"
+},
+"Espárragos": {
+"f": "f-esparragos.jpg"
+},
+"Kit de ensalada de aguacate y ranch": {
+"f": "f-kit-aguacate-ranch.jpg",
+"n": "f-kit-aguacate-ranch-nut.jpg"
+},
+"Papas para hornear": {
+"f": "f-papas-hornear.jpg"
+},
+"Plátanos": {
+"f": "f-platanos.jpg"
+},
+"Plátanos orgánicos": {
+"f": "f-platanos-organicos.jpg"
+},
+"Jitomates Campari cultivados en invernadero": {
+"f": "f-jitomate-campari-2lb.jpg"
+},
+"Uvas negras sin semilla": {
+"f": "f-uvas-negras.jpg"
+},
+"Arándanos azules": {
+"f": "f-arandanos.jpg"
+},
+"Arándanos azules orgánicos": {
+"f": "f-arandanos-organicos.jpg"
+},
+"Melón cantaloupe": {
+"f": "f-cantaloupe.jpg"
+},
+"Kit de ensalada dulce de col rizada": {
+"f": "f-kit-col-rizada.jpg"
+},
+"Jitomates cherry cultivados en invernadero": {
+"f": "f-jitomate-cherry.jpg"
+},
+"Papas cremer": {
+"f": "f-papas-cremer.jpg"
+},
+"Manzanas Envy": {
+"f": "f-manzanas-envy.jpg"
+},
+"Hongos chanterelle frescos": {
+"f": "f-chanterelle.jpg"
+},
+"Arándanos rojos frescos": {
+"f": "f-arandanos-rojos.jpg"
+},
+"Ajo": {
+"f": "f-ajo.jpg"
+},
+"Papas doradas": {
+"f": "f-papas-doradas.jpg"
+},
+"Toronja": {
+"f": "f-toronja.jpg"
+},
+"Col verde": {
+"f": "f-col-verde.jpg"
+},
+"Uvas verdes sin semilla": {
+"f": "f-uvas-verdes.jpg"
+},
+"Alcachofas jumbo": {
+"f": "f-alcachofas.jpg"
+},
+"Pepinos mini": {
+"f": "f-pepinos-mini.jpg"
+},
+"Pimientos mixtos": {
+"f": "f-pimientos-mixtos.jpg"
+},
+"Pimientos morrones mixtos orgánicos de invernadero": {
+"f": "f-pimientos-mixtos.jpg"
+},
+"Naranjas": {
+"f": "f-naranjas.jpg"
+},
+"Champiñones baby bella orgánicos": {
+"f": "f-baby-bella.jpg"
+},
+"Espinaca baby orgánica": {
+"f": "f-espinaca-baby.jpg"
+},
+"Coles de Bruselas orgánicas": {
+"f": "f-coles-bruselas.jpg"
+},
+"Zanahorias orgánicas": {
+"f": "f-zanahorias.jpg"
+},
+"Floretes de coliflor orgánicos": {
+"f": "f-coliflor.jpg"
+},
+"Apio orgánico": {
+"f": "f-apio.jpg"
+},
+"Kit de ensalada César orgánica": {
+"f": "f-kit-cesar.jpg"
+},
+"Ajo pelado orgánico Christopher Ranch": {
+"f": "f-ajo-pelado.jpg"
+},
+"Calabaza butternut orgánica cortada fresca": {
+"f": "f-butternut.jpg"
+},
+"Manzana Fuji orgánica": {
+"f": "f-fuji.jpg"
+},
+"Jitomates uva orgánicos": {
+"f": "f-jitomate-uva.jpg"
+},
+"Ejotes orgánicos": {
+"f": "f-ejotes.jpg"
+},
+"Uvas verdes sin semilla orgánicas": {
+"f": "f-uvas-verdes-org.jpg"
+},
+"Pepinos largos ingleses orgánicos de invernadero": {
+"f": "f-pepino-ingles.jpg"
+},
+"Love Beets Betabeles cocidos orgánicos": {
+"f": "f-love-beets.jpg"
+},
+"Kit de ensalada mediterránea orgánica": {
+"f": "f-kit-mediterraneo.jpg",
+"n": "f-kit-mediterraneo-nut.jpg"
+},
+"Champiñones blancos grandes premium orgánicos": {
+"f": "f-champi-blancos.jpg"
+},
+"Zanahorias peladas orgánicas": {
+"f": "f-zanahorias-peladas.jpg"
+},
+"Mezcla de hojas verdes orgánicas": {
+"f": "f-hojas-verdes.jpg"
+}
 }
