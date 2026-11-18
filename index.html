@@ -84,6 +84,7 @@ main{padding-bottom:100px}
 .ban.fgt{background:var(--card);border:2px solid var(--green);color:var(--ink)}.ban.fgt button{background:var(--green)}
 .ebtcard{display:flex;gap:12px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 14px}
 .ebtcard .ic{font-size:26px}.ebtcard .tx{flex:1}.ebtcard b{display:block;font-size:16px}.ebtcard small{display:block;color:var(--mute);font-size:13px;margin-top:2px}
+.xsteps{margin:8px 0 4px;padding-left:22px;font-size:15px;line-height:1.4}.xsteps li{margin:6px 0}#ebtBox{border:2px solid var(--green);border-radius:12px;padding:10px 12px;margin-top:10px}
 .ebtcard button{flex:none;border:0;border-radius:10px;background:var(--green);color:var(--on);font:700 14px system-ui;min-height:44px;padding:0 14px;cursor:pointer}
 .sub h3{margin:18px 0 6px;font-size:17px}.sub ul,.sub ol{margin:4px 0 0;padding-left:22px}.sub li,.sub p{font-size:16px;line-height:1.45;margin:4px 0}
 .sub .warn{background:var(--warn-bg);color:var(--warn);border:2px solid var(--gold);border-radius:12px;padding:12px;font-weight:700;margin:14px 0}
@@ -232,6 +233,7 @@ button.tile,button.ct{font:inherit;color:var(--ink);text-align:left;width:100%}
  <h3 data-t="ecf"></h3>
  <p data-t="ecg"></p>
  <p data-t="ech"></p>
+ <p data-t="ecm"></p>
  <h3 data-t="eci"></h3>
  <p data-t="ecj"></p>
  <p data-t="eck"></p>
@@ -320,6 +322,20 @@ button.tile,button.ct{font:inherit;color:var(--ink);text-align:left;width:100%}
  <div class="note" data-t="cutoff"></div>
  <div class="note" id="eta" aria-live="polite"></div>
 </section>
+ <section id="ebtSec">
+ <h2 data-t="xH"></h2>
+ <label class="chk"><input type="checkbox" id="ebtOn"><span data-t="xOn"></span></label>
+ <div id="ebtBox" hidden>
+  <ol class="xsteps"><li data-t="xs1"></li><li data-t="xs2"></li><li data-t="xs3"></li><li data-t="xs4"></li></ol>
+  <label class="f" for="ebtStore" data-t="xStore"></label>
+  <select id="ebtStore"><option value="Walmart">Walmart</option><option value="Safeway">Safeway</option><option value="Other" data-t="xOther"></option></select>
+  <label class="f" for="ebtNum" data-t="xNum"></label><input type="text" id="ebtNum" autocomplete="off">
+  <label class="f" for="ebtWho" data-t="xWho"></label><input type="text" id="ebtWho" autocomplete="off">
+  <label class="f" for="ebtWhen" data-t="xWhen"></label><input type="text" id="ebtWhen" autocomplete="off">
+  <label class="f" for="ebtCnt" data-t="xCnt"></label><input type="number" id="ebtCnt" inputmode="numeric" min="0" step="1">
+  <div class="note" data-t="xNote"></div>
+ </div>
+</section>
  <section>
  <h2 data-t="h4"></h2>
  <small class="h" data-t="saveNote"></small>
@@ -328,7 +344,7 @@ button.tile,button.ct{font:inherit;color:var(--ink);text-align:left;width:100%}
  <label class="f" for="email" data-t="lEmail"></label><input type="text" id="email" inputmode="email" autocomplete="email">
  <label class="f" for="addr" data-t="lAddr"></label><input type="text" id="addr" autocomplete="street-address">
  <label class="f" for="inst" data-t="lInst"></label><input type="text" id="inst">
- <span class="f" data-t="lPay"></span>
+ <span class="f" id="lPayL" data-t="lPay"></span>
  <div class="chips" id="pay"><label><input type="radio" name="pay" value="Cash App" checked><span>Cash App</span></label><label><input type="radio" name="pay" value="Zelle"><span>Zelle</span></label><label><input type="radio" name="pay" value="Cash"><span data-t="cash"></span></label><label><input type="radio" name="pay" value="Other"><span data-t="oth"></span></label></div>
  <div class="note" data-t="payNote"></div>
  <label class="chk"><input type="checkbox" id="auth"><span data-t="auth"></span></label>
@@ -379,6 +395,15 @@ cutoff:"Entregamos martes y viernes. Pide antes de las 6 PM de la noche anterior
 h3:"Costo estimado",lVol:"Tamaño total del pedido",v0:"Normal",v1:"Grande (Large)",v2:"Extra grande (Extra Large)",
 n1:"Cualquier cargo adicional se te comunicará y deberás aprobarlo antes de que compremos.",
 h4:"Tus datos",lName:"Nombre completo",lPhone:"Teléfono",lAddr:"Dirección de entrega",lInst:"Instrucciones de entrega (opcional)",lPay:"Forma de pago",cash:"Efectivo",oth:"Otro",
+xH:"¿Pagas tus compras con EBT?",xOn:"Sí, hice un pedido para recoger (pickup) pagado con EBT",
+xs1:"Haz tu pedido para recoger (pickup) en la app o página de Walmart o Safeway y paga tus compras ahí con tu tarjeta EBT. Tú escribes tu PIN. Nunca nos des tu tarjeta ni tu PIN.",
+xs2:"Elige una hora de recogida para el mismo día de tu entrega (martes o viernes).",
+xs3:"Si la tienda lo permite, agrega a otra persona para recoger. Te llamamos para darte el nombre que debes poner.",
+xs4:"Escribe abajo el número de tu pedido. Nosotros lo recogemos y te lo llevamos a tu casa.",
+xStore:"Tienda del pedido",xOther:"Otra tienda",xNum:"Número de pedido",xWho:"Nombre en el pedido",xWhen:"Día y hora de recogida",xCnt:"¿Cuántos artículos más o menos?",
+xNote:"La tarifa de servicio y entrega no se puede pagar con EBT. Abajo elige cómo pagarás la tarifa (Cash App, Zelle o efectivo).",
+xNeedNum:"Escribe el número de tu pedido EBT para recoger.",xRow:"Pedido EBT para recoger (ya pagado con EBT)",xPaid:"$0 aquí",lPay2:"Forma de pago de la tarifa de servicio",
+ecm:"Si tienes EBT, puedes hacer tu pedido para recoger en Walmart o Safeway y pagarlo con tu tarjeta en su app. Luego, en la pestaña Pedido, marca \"Sí, hice un pedido para recoger\" y escribe tu número de pedido. Nosotros lo recogemos y te lo llevamos. Solo pagas la tarifa de servicio con Cash App, Zelle o efectivo.",
 payNote:"El pago se necesita antes de comprar. Te contactaremos para coordinarlo. Esta página no procesa pagos.",
 auth:"Autorizo hasta $20 sobre mi presupuesto, solo para productos y sin contactarme antes.",lRef:"Si falta un producto o hay un ajuste de precio, prefiero:",
 r1:"Reembolso al pago original",r2:"Crédito para mi próximo pedido",r3:"Reembolso en efectivo",r4:"Contáctenme para decidir",lSpec:"Instrucciones especiales (alergias, sustituciones, marcas)",
@@ -393,6 +418,15 @@ cutoff:"We deliver Tuesday and Friday. Order by 6 PM the evening before.",h2:"2.
 h3:"Estimated cost",lVol:"Total order size",v0:"Normal",v1:"Large",v2:"Extra Large",
 n1:"Any extra charge will be shared with you and needs your approval before we shop.",
 h4:"Your details",lName:"Full name",lPhone:"Phone number",lAddr:"Delivery address",lInst:"Delivery instructions (optional)",lPay:"Payment method",cash:"Cash",oth:"Other",
+xH:"Paying for groceries with EBT?",xOn:"Yes, I placed a pickup order paid with EBT",
+xs1:"Place a pickup order in the Walmart or Safeway app or website and pay for your groceries there with your EBT card. You type your own PIN. Never give us your card or PIN.",
+xs2:"Choose a pickup time on the same day as your delivery (Tuesday or Friday).",
+xs3:"If the store allows it, add another pickup person. We will call you with the name to use.",
+xs4:"Type your order number below. We pick it up and bring it to your home.",
+xStore:"Store for the order",xOther:"Other store",xNum:"Order number",xWho:"Name on the order",xWhen:"Pickup day and time",xCnt:"About how many items?",
+xNote:"Service and delivery fees cannot be paid with EBT. Below, choose how you will pay the fee (Cash App, Zelle or cash).",
+xNeedNum:"Type the order number of your EBT pickup order.",xRow:"EBT pickup order (already paid with EBT)",xPaid:"$0 here",lPay2:"How you will pay the service fee",
+ecm:"If you have EBT, you can place a pickup order at Walmart or Safeway and pay with your card in their app. Then, in the Order tab, check \"Yes, I placed a pickup order\" and type your order number. We pick it up and bring it to you. You only pay the service fee with Cash App, Zelle or cash.",
 payNote:"Payment is required before shopping. We will contact you to arrange it. This page does not process payments.",
 auth:"I authorize up to $20 over my budget, for groceries only, without contacting me first.",lRef:"If an item is unavailable or a price adjustment is needed, I prefer:",
 r1:"Refund to original payment",r2:"Credit toward next order",r3:"Cash refund",r4:"Contact me to discuss",lSpec:"Special instructions (allergies, substitutions, brands)",
@@ -448,6 +482,9 @@ function addPhotos(inp){var t=T[lang],st=inp.dataset.f,files=Array.prototype.sli
  if(files.length>room)setMsg(t.maxPhotos,"err");else setMsg("");
  files=files.slice(0,Math.max(room,0));if(!files.length){inp.value="";return}
  Promise.all(files.map(shrink)).then(function(arr){photoData[st]=(photoData[st]||[]).concat(arr);renderLists();calc()},function(){setMsg(t.photoErr,"err");inp.value=""})}
+function ebtInfo(){if(!$("ebtOn").checked)return null;var st=$("ebtStore").value,num=$("ebtNum").value.trim();return {store:st==="Other"?"Other store":st,number:num,name:$("ebtWho").value.trim(),pickup:$("ebtWhen").value.trim(),count:Math.max(0,parseInt($("ebtCnt").value,10)||0)}}
+function ebtLines(x){return ["EBT PICKUP ORDER - already paid with EBT / ya pagado con EBT","Order # / Pedido #: "+(x.number||"-"),"Name on order / Nombre: "+(x.name||"-"),"Pickup / Recogida: "+(x.pickup||"-"),"Items / Artículos: ~"+x.count]}
+function storeCount(names,x){var u={};names.forEach(function(n){u[n]=1});if(x)u[x.store]=1;return Object.keys(u).length}
 function payload(){
  var names=STORES.map(function(s){return s[0]}).filter(function(n){return sel[n]&&has(n)}),cv=$("comm").value,parts=cv.split("|"),vol=+$("vol").value,total=0,groc=0,hasList=false,needPhoto=false,blocks=[];
  names.forEach(function(nm){var ph=modes[nm]==="photo",c=ph?(parseInt(pcount[nm],10)||0):count(lists[nm])+cq(nm);total+=c;groc+=gv(nm);
@@ -455,12 +492,14 @@ function payload(){
   if(ph){if(!(photoData[nm]||[]).length)needPhoto=true;else hasList=true;b+="\n(lista en foto / list in photo, ~"+c+")";}
   else{var ls=(lists[nm]||"").split("\n").map(function(x){return x.trim()}).filter(Boolean).concat(cartLines(nm));if(ls.length)hasList=true;b+="\n"+ls.map(function(x){return "- "+x}).join("\n")}
   blocks.push(b)});
+ var ex=ebtInfo();if(ex){total+=ex.count;hasList=true;blocks.unshift(ex.store.toUpperCase()+" - EBT PICKUP\n"+ebtLines(ex).map(function(x){return "- "+x}).join("\n"))}
  var photos=[];names.forEach(function(nm){if(modes[nm]==="photo")(photoData[nm]||[]).forEach(function(d){photos.push({data:d,store:nm})})});
  var ref=checked("ref"),pay=checked("pay"),day=checked("day");
- return {name:$("name").value.trim(),phone:$("phone").value.trim(),email:$("email").value.trim(),address:$("addr").value.trim(),community:cv==="x"?"Other":parts[0],day:day?day.value:"Tuesday",stores:names,budget:Math.round(groc*100)/100,payment:pay?pay.value:"",authorize:$("auth").checked,addon:$("addon").checked,refund:ref?({r1:"original payment",r2:"credit",r3:"in cash",r4:"contact me"})[ref.value]:"",list:blocks.join("\n\n"),special:$("spec").value.trim(),instructions:$("inst").value.trim(),count:total,size:["Normal","Large","Extra Large"][vol],consent:$("consent").checked,photos:photos,website:$("website").value,_hasList:hasList,_needPhoto:needPhoto,_cv:cv}}
+ return {name:$("name").value.trim(),phone:$("phone").value.trim(),email:$("email").value.trim(),address:$("addr").value.trim(),community:cv==="x"?"Other":parts[0],day:day?day.value:"Tuesday",stores:ex&&names.indexOf(ex.store)<0?[ex.store].concat(names):names,ebt:!!ex,ebtPickup:ex,budget:Math.round(groc*100)/100,payment:pay?pay.value:"",authorize:$("auth").checked,addon:$("addon").checked,refund:ref?({r1:"original payment",r2:"credit",r3:"in cash",r4:"contact me"})[ref.value]:"",list:blocks.join("\n\n"),special:((ex?"[EBT PICKUP: "+ex.store+" #"+(ex.number||"-")+(ex.pickup?", "+ex.pickup:"")+"] ":"")+$("spec").value.trim()).trim(),_ebtBad:!!(ex&&!ex.number),instructions:$("inst").value.trim(),count:total,size:["Normal","Large","Extra Large"][vol],consent:$("consent").checked,photos:photos,website:$("website").value,_hasList:hasList,_needPhoto:needPhoto,_cv:cv}}
 function check(p){var t=T[lang];
  if(!p.stores.length)return t.none;
  if(!p.name||!p.phone||!p.address||!p._cv)return t.needInfo;
+ if(p._ebtBad)return t.xNeedNum;
  if(p._needPhoto)return t.needPhoto;
  if(!p._hasList)return t.needList;
  if(p.list.length>6000)return t.longList;
@@ -472,14 +511,14 @@ function send(){
  if(sending||!ORDER_URL)return;var t=T[lang],p=payload(),err=check(p);
  if(err){setMsg(err,"err");return}
  var rp=repeats();if(rp&&rp!==dupSeen){dupSeen=rp;setMsg(t.dupWarn+" "+rp,"err");return}
- delete p._hasList;delete p._needPhoto;delete p._cv;
+ delete p._hasList;delete p._needPhoto;delete p._cv;delete p._ebtBad;
  sending=true;$("send").disabled=true;setMsg(t.sending,"");
  var ctl=window.AbortController?new AbortController():null,to=setTimeout(function(){if(ctl)ctl.abort()},90000);
  function end(){clearTimeout(to);sending=false;$("send").disabled=false}
  fetch(ORDER_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(p),signal:ctl?ctl.signal:undefined})
  .then(function(r){return r.json()})
  .then(function(j){end();
-  if(j&&j.ok){saveLast();pushHist(p);sel={};cart={};active="";lists={};buds={};modes={};pcount={};photoData={};$("spec").value="";$("auth").checked=false;$("addon").checked=false;syncAdd();$("consent").checked=false;tiles();renderLists();calc();setMsg(t.sentOk,"ok");renderHist();var ob=$("okBanner");ob.textContent=t.sentOk;ob.className="msg ok";showTab("orders")}
+  if(j&&j.ok){saveLast();pushHist(p);sel={};cart={};active="";lists={};buds={};modes={};pcount={};photoData={};$("spec").value="";$("auth").checked=false;$("addon").checked=false;syncAdd();$("ebtOn").checked=false;["ebtNum","ebtWho","ebtWhen","ebtCnt"].forEach(function(i){$(i).value=""});syncEbt();$("consent").checked=false;tiles();renderLists();calc();setMsg(t.sentOk,"ok");renderHist();var ob=$("okBanner");ob.textContent=t.sentOk;ob.className="msg ok";showTab("orders")}
   else setMsg(t.sentErr+(j&&j.error?" ("+j.error+")":""),"err")},
   function(){end();setMsg(t.sentErr,"err")})}
 
@@ -610,7 +649,8 @@ function text(){var t=T[lang];
 }
 function calc(){
  var t=T[lang],S=t.S,names=STORES.map(function(s){return s[0]}).filter(function(n){return sel[n]&&has(n)});
- var n=names.length,storeFee=n>=3?15:n===2?10:0,total=0,groc=0;
+ var ex=ebtInfo(),n=storeCount(names,ex),storeFee=n>=3?15:n===2?10:0,total=ex?ex.count:0,groc=0;
+ $("lPayL").textContent=ex?t.lPay2:t.lPay;
  names.forEach(function(nm,k){var c=modes[nm]==="photo"?(parseInt(pcount[nm],10)||0)+cq(nm):count(lists[nm])+cq(nm);total+=c;groc+=gv(nm)});
  STORES.filter(function(s){return sel[s[0]]}).forEach(function(s,k){var el=$("c-"+k),nm=s[0],c=modes[nm]==="photo"?(parseInt(pcount[nm],10)||0)+cq(nm):count(lists[nm])+cq(nm);if(el)el.textContent=c+" "+t.items});
  var cv=$("comm").value,parts=cv.split("|"),zone=(cv===""||cv==="x")?null:+parts[1],commName=cv==="x"?t.otherC:parts[0]||"-";
@@ -618,7 +658,7 @@ function calc(){
  var svc=(base===null||xl||n===0)?null:base+storeFee+large;
  var tot=n===0?t.none:(svc===null?(base===null?t.confirm:t.quote):money(groc+svc));
  var r;
- r='<div class="row"><span>'+t.groc+'</span><span>'+money(groc)+'</span></div>'+
+ r=(ex?'<div class="row"><span>'+t.xRow+' · '+ex.store+'</span><span>'+t.xPaid+'</span></div>':'')+'<div class="row"><span>'+t.groc+'</span><span>'+money(groc)+'</span></div>'+
  '<div class="row"><span>'+t.zone+' '+(zone||"")+'</span><span>'+(base===null?t.confirm:money(base))+'</span></div>'+
  '<div class="row"><span>'+t.stores+' ('+n+')</span><span>'+money(storeFee)+'</span></div>'+
  '<div class="row"><span>'+t.large+' ('+total+' '+t.items+')</span><span>'+(xl?t.quote:money(large))+'</span></div>'+
@@ -630,6 +670,7 @@ function calc(){
   $("auth").checked?S.auth:S.noauth,S.ref+": "+label(checked("ref"))];
  if($("inst").value)L.push(S.inst+": "+$("inst").value); if($("spec").value)L.push(S.spec+": "+$("spec").value);
  L.push("","== "+S.list+" ==");
+ if(ex){L.push("",ex.store.toUpperCase()+" - EBT PICKUP");ebtLines(ex).forEach(function(x){L.push("- "+x)})}
  names.forEach(function(nm){L.push("",nm.toUpperCase()+(gv(nm)?" ("+money(gv(nm))+")":""));if(modes[nm]==="photo"){L.push(t.photoSum+" (~"+(parseInt(pcount[nm],10)||0)+" "+t.items+")");cartLines(nm).forEach(function(x){L.push("- "+x)})}else{(lists[nm]||"").split("\n").forEach(function(x){if(x.trim())L.push("- "+x.trim())});cartLines(nm).forEach(function(x){L.push("- "+x)})}});
  L.push("","== "+S.fees+" ==",t.groc+": "+money(groc),t.zone+" "+(zone||"")+": "+(base===null?t.confirm:money(base)),t.stores+" ("+n+"): "+money(storeFee),t.large+": "+(xl?t.quote:money(large)),t.total+": "+tot);
  $("sum").value=L.join("\n");
@@ -637,6 +678,8 @@ function calc(){
  updateEta();saveProfile();showRepeat();
 }
 $("lang").addEventListener("click",function(){lang=lang==="es"?"en":"es";text();renderNews();renderTiles();renderCats();renderLists();renderHist();calc()});
+function syncEbt(){$("ebtBox").hidden=!$("ebtOn").checked}
+["ebtOn","ebtStore","ebtNum","ebtWho","ebtWhen","ebtCnt"].forEach(function(i){$(i).addEventListener("input",function(){syncEbt();calc()});$(i).addEventListener("change",function(){syncEbt();calc()})});
 ["comm","vol","name","phone","addr","inst","spec","auth"].forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
 q('input[type="radio"]').forEach(function(r){r.addEventListener("change",calc)});
 $("copy").addEventListener("click",function(){var b=$("copy"),x=$("sum").value;
