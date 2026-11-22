@@ -652,7 +652,7 @@ $("copy").addEventListener("click",function(){var b=$("copy"),x=$("sum").value;
  try{navigator.clipboard.writeText(x).then(ok,fb)}catch(e){fb()}});
 loadProfile();text();tiles();renderLists();calc();renderHist();showTab("shop");
 q("#nav button").forEach(function(b){b.addEventListener("click",function(){showTab(b.dataset.tab)})});
-$("upBtn").addEventListener("click",function(){photoPending=true;$("photoHint").hidden=false;showTab("shop");var e=$("photoHint");if(e&&e.scrollIntoView)e.scrollIntoView({behavior:"smooth",block:"start"})});
+$("upBtn").addEventListener("click",function(){if(active&&sel[active]){photoPending=true;pickStore(active);return}photoPending=true;$("photoHint").hidden=false;showTab("shop");var e=$("photoHint");if(e&&e.scrollIntoView)e.scrollIntoView({behavior:"smooth",block:"start"})});
 if(!ORDER_URL)$("sendBox").style.display="none";
 $("send").addEventListener("click",send);
 $("wa").addEventListener("click",saveLast);$("repBtn").addEventListener("click",repeatLast);$("forget").addEventListener("click",forgetAll);
