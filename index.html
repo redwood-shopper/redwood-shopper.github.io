@@ -126,7 +126,7 @@ button.tile,button.ct{font:inherit;color:var(--ink);text-align:left;width:100%}
 .subs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}.sc{min-height:44px;padding:6px 14px;border:2px solid var(--line);border-radius:999px;background:var(--bg);color:var(--ink);font:600 15px system-ui;cursor:pointer}.sc.on{border-color:var(--green);background:var(--green);color:var(--on)}.sc i{font-style:normal;opacity:.75;margin-left:6px;font-weight:400}
 .row.total.empty span:last-child{color:var(--mute)}
 .ct .e{font-size:24px}
-.bd{margin-left:auto;font-size:12px;background:var(--gold);color:#fff;border-radius:999px;padding:2px 8px;white-space:nowrap}
+.ct>span:nth-child(2){flex:1;min-width:0;overflow-wrap:anywhere}.ct .bd{flex:none}.bd{margin-left:auto;font-size:12px;background:var(--gold);color:#fff;border-radius:999px;padding:2px 8px;white-space:nowrap}
 .act{font-size:12px;background:var(--green);color:var(--on);border-radius:999px;padding:2px 8px;margin-left:auto}
 .tile.on .act{background:var(--on);color:var(--green)}
 .hc{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:10px;background:var(--bg)}
@@ -148,11 +148,11 @@ button.tile,button.ct{font:inherit;color:var(--ink);text-align:left;width:100%}
 <div id="urgent" class="urgent" role="status" hidden></div>
 <div class="pane" id="p-shop">
  <div class="ban"><span class="ic" aria-hidden="true">📷</span><div><b data-t="banT"></b><small data-t="banS"></small></div><button type="button" id="upBtn" data-t="upBtn"></button></div>
- <div class="ban fgt"><span class="ic" aria-hidden="true">➕</span><div><b data-t="fgT"></b><small data-t="fgS"></small></div><button type="button" id="fgBtn" data-t="fgBtn"></button></div>
- <div class="note okn" id="fgNote" data-t="fgNote" hidden></div>
+ <button type="button" id="fgBtn" style="display:none"></button>
  <section><h2 data-t="hS1"></h2><small class="h" data-t="hS1h"></small><div class="note hint" id="photoHint" data-t="photoHint" hidden></div><div class="grid" id="tiles"></div></section>
  <section id="catsec"><h2 id="catH"></h2><div class="grid" id="cats"></div><input type="search" id="srch" autocomplete="off" style="margin-top:12px"><div id="prods"></div></section>
  <button type="button" id="addBtn" class="addbtn" aria-pressed="false"><span class="ic" aria-hidden="true">➕</span><span class="tx"><b data-t="addBtnT"></b><small data-t="addBtnS"></small></span><span class="sw" aria-hidden="true"><i></i></span></button>
+ <div class="note okn" id="fgNote" data-t="fgNote" hidden></div>
  <input type="checkbox" id="addon" hidden>
 </div>
 <div class="pane sub" id="p-comm" hidden>
@@ -675,7 +675,7 @@ $("addBtn").addEventListener("click",function(){$("addon").checked=!$("addon").c
   var nm=dispName(lang==="es"?it[2]:it[3]),sz=(lang==="es"?it[4]:it[5])||"";
   o.innerHTML='<div class="pc"><button type="button" class="px" aria-label="'+esc(t.nutX)+'">✕</button><img class="pi" alt="" src="'+esc(d+fo.f)+'"><h3>'+esc(nm)+'</h3>'+(sz?'<p class="pz">'+esc(sz)+'</p>':'')+'<div class="pp">'+money(it[6])+'</div><p class="pe">'+esc(t.psEst)+' · '+esc(fmtShort(it[7]))+'</p><div class="pq"><span class="stp"><button type="button" data-d="-1" aria-label="-">−</button><b class="qv">0</b><button type="button" data-d="1" aria-label="+">+</button></span><small class="qs"></small></div>'+(okFile(fo.n)?'<button type="button" class="pn">'+esc(t.nutBtn)+'</button>':'')+'<button type="button" class="pd">'+esc(t.psDone)+'</button></div>';
   function upd(){var q=((cart[n]||{})[i])||0;o.querySelector(".qv").textContent=q;o.querySelector(".qs").textContent=""}
-  o.addEventListener("click",function(e){var x=e.target;if(x===o||x.closest(".px")||x.closest(".pd")){closePs();return}var b=x.closest&&x.closest("[data-d]");if(b){chg(n,i,parseInt(b.dataset.d,10));upd();return}if(x.closest(".pn")){var ex=o.querySelector(".pn2");if(ex){ex.remove();return}var im=document.createElement("img");im.className="pn2";im.alt="";im.src=d+fo.n;x.closest(".pn").insertAdjacentElement("afterend",im);return}if(x.classList.contains("pi")){var l=document.createElement("div");l.id="lb";var im2=document.createElement("img");im2.src=x.src;im2.className="prod";var bb=document.createElement("button");bb.textContent="✕ "+t.nutX;l.appendChild(im2);l.appendChild(bb);l.addEventListener("click",function(ev){ev.stopPropagation();l.remove()});document.body.appendChild(l)}});
+  o.addEventListener("click",function(e){var x=e.target;if(x.closest(".pd")&&!(((cart[n]||{})[i])||0)){chg(n,i,1)}if(x===o||x.closest(".px")||x.closest(".pd")){closePs();return}var b=x.closest&&x.closest("[data-d]");if(b){chg(n,i,parseInt(b.dataset.d,10));upd();return}if(x.closest(".pn")){var ex=o.querySelector(".pn2");if(ex){ex.remove();return}var im=document.createElement("img");im.className="pn2";im.alt="";im.src=d+fo.n;x.closest(".pn").insertAdjacentElement("afterend",im);return}if(x.classList.contains("pi")){var l=document.createElement("div");l.id="lb";var im2=document.createElement("img");im2.src=x.src;im2.className="prod";var bb=document.createElement("button");bb.textContent="✕ "+t.nutX;l.appendChild(im2);l.appendChild(bb);l.addEventListener("click",function(ev){ev.stopPropagation();l.remove()});document.body.appendChild(l)}});
   upd();document.body.appendChild(o)};
  document.addEventListener("click",function(e){var x=e.target;if(!x||!x.closest)return;var h=x.closest("[data-pi]");if(h&&h.dataset.ps&&(h.tagName==="IMG"||(h.classList.contains("pnm")||h.classList.contains("pnmw")))){e.stopImmediatePropagation();window.openSheet(h.dataset.ps,h.dataset.pi)}},true);
  document.addEventListener("keydown",function(e){if(e.key==="Escape")closePs()})})();
