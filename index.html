@@ -527,7 +527,8 @@ function chg(n,i,d){var o=cart[n]=cart[n]||{};o[i]=Math.max(0,(o[i]||0)+d);sel[n
 function renderTiles(){var t=T[lang];
  $("tiles").innerHTML=STORES.map(function(s){var on=active===s[0],b=!!sel[s[0]]&&!on;return '<button type="button" class="tile'+(on?" on":"")+(b?" sel":"")+'" data-st="'+esc(s[0])+'"><span class="e" aria-hidden="true">'+s[1]+'</span><b>'+esc(s[0])+'</b>'+(on?'<span class="act">'+(sel[s[0]]?"✓ ":"")+t.tView+'</span>':(b?'<span class="bd">'+t.tChosen+'</span>':''))+(sel[s[0]]?'<span class="tx" role="button" tabindex="0" aria-label="'+esc(t.rmStore)+'" data-rm="'+esc(s[0])+'">✕</span>':'')+'</button>'}).join("");
  q("#tiles button").forEach(function(b){b.addEventListener("click",function(){pickStore(b.dataset.st)})});q("#tiles .tx").forEach(function(x){function go(e){e.stopPropagation();e.preventDefault();removeStore(x.dataset.rm)}x.addEventListener("click",go);x.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" ")go(e)})})}
-function removeStore(n){sel[n]=false;[cart,lists,modes,photoData,buds,pcount].forEach(function(o){delete o[n]});if(active===n)active="";renderTiles();renderCats();renderLists();calc()}
+function storeCount(n){var c=0,o=cart[n]||{};Object.keys(o).forEach(function(k){c+=(o[k]>0?o[k]:0)});c+=String(lists[n]||"").split(/\n/).filter(function(x){return x.trim()}).length;c+=(photoData[n]||[]).length;return c}
+function removeStore(n){var k=storeCount(n);if(k>0){var m=lang==="es"?"Si quitas "+n+", también se borran los "+k+" producto(s) que elegiste de esa tienda. ¿Quitar la tienda?":"If you remove "+n+", the "+k+" item(s) you picked from that store will be deleted too. Remove the store?";if(!window.confirm(m))return}sel[n]=false;[cart,lists,modes,photoData,buds,pcount].forEach(function(o){delete o[n]});if(active===n)active="";renderTiles();renderCats();renderLists();calc()}
 function pickStore(n){sel[n]=true;active=n;
  if(photoPending){photoPending=false;modes[n]="photo";$("photoHint").hidden=true;renderTiles();renderCats();renderLists();calc();showTab("cart");return}
  loadStore(n,function(){renderTiles();renderCats();renderLists();calc();
@@ -598,7 +599,7 @@ function renderLists(){
     :cartHtml(n)+'<label class="f">'+t.listLbl+'</label><textarea data-s="'+esc(n)+'" placeholder="'+esc(t.ph)+'">'+esc(lists[n]||"")+'</textarea><div class="sg" aria-live="polite"></div>'+qaHtml(n))+
   '<label class="f">'+t.budLbl+'</label><input type="number" inputmode="decimal" min="0" data-b="'+esc(n)+'" placeholder="'+esc(ct(n)?ct(n).toFixed(2):"")+'" value="'+esc(buds[n]||"")+'"></div>'}).join("");
  q("#lists [data-a]").forEach(function(b){b.addEventListener("click",function(){var x=b.dataset.a.split("|");chg(b.dataset.st,+x[0],+x[1])})});
- q("#lists [data-rm]").forEach(function(b){b.addEventListener("click",function(){var n=b.dataset.rm;sel[n]=false;[cart,lists,modes,photoData,buds,pcount].forEach(function(o){delete o[n]});if(active===n)active="";renderTiles();renderCats();renderLists();calc()})});
+ q("#lists [data-rm]").forEach(function(b){b.addEventListener("click",function(){removeStore(b.dataset.rm)})});
  q("#lists input[data-m]").forEach(function(a){a.addEventListener("change",function(){modes[a.dataset.m]=a.value;renderLists();calc()})});
  q("#lists textarea").forEach(function(a){a.addEventListener("input",function(){lists[a.dataset.s]=a.value;calc();sgUpdate(a)});["click","keyup","focus"].forEach(function(e){a.addEventListener(e,function(){sgUpdate(a)})});sgUpdate(a)});
  q("#lists .sg").forEach(function(bx){bx.addEventListener("click",function(e){var b=e.target.closest?e.target.closest("[data-sga]"):null;if(b)sgAdd(b)})});
