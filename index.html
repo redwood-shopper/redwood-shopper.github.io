@@ -544,7 +544,7 @@ var VI={},FLG=[];
   return '<div class="pcard fg'+(inq>0?' in':'')+'"><div class="pimg"><span class="noph">🛒</span></div><div class="pnmw" data-fl="'+fi+'">'+nm+'</div><div class="psz">'+szs+'</div><div class="ppr">'+(mn<mx?(es?'desde ':'from '):'')+money(mn)+'</div><div class="fbd">'+g.length+(es?' variedades':' varieties')+(inq>0?' · '+inq+(es?' en el carrito':' in cart'):'')+'</div><button type="button" class="padd" data-fl="'+fi+'">'+(es?'Elegir variedad':'Choose variety')+'</button></div>'}
 function renderCats(){var t=T[lang],li=lang==="es"?0:1;
  $("catH").textContent=t.hS2+(active?" — "+active:"");
- if(!active){$("cats").innerHTML="";$("prods").innerHTML='<div class="note">'+t.selHint+'</div>';return}
+ if(!active){$("cats").innerHTML="";$("prods").innerHTML='';$("catsec").style.display="none";return}$("catsec").style.display="";
  var idx=[];CAT.forEach(function(it,i){if(it[0]===active)idx.push(i)});
  var CL=CATS,CE=CATS_ES,EE=EM;if(active==="Walgreens"){CL=WC;CE=WC_ES;EE=WEM}$("cats").innerHTML=CL.map(function(c,k){var n=idx.filter(function(i){return CAT[i][1]===c}).length;return '<button type="button" class="ct'+(bcat[active]===c?" on":"")+(n?"":" dim")+'" data-cc="'+esc(c)+'"><span class="e" aria-hidden="true">'+EE[k]+'</span><span>'+esc(lang==="es"?CE[k]:c)+'</span>'+(n?'<span class="bd">'+n+'</span>':'')+'</button>'}).join("");
  q("#cats button").forEach(function(b){b.addEventListener("click",function(){bcat[active]=(bcat[active]===b.dataset.cc)?"":b.dataset.cc;shown=60;renderCats();setTimeout(function(){var e=$("prods");if(e&&e.scrollIntoView)e.scrollIntoView({behavior:"smooth",block:"start"})},50)})});
