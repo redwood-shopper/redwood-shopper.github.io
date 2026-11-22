@@ -58,6 +58,15 @@ input[type=file]{width:100%;min-height:44px;margin-top:4px}
 .pbtns{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
 .pbtn{position:relative;flex:1 1 200px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;border:2px solid var(--green);border-radius:14px;background:var(--card);color:var(--green);font:700 16px system-ui;cursor:pointer;text-align:center;padding:8px 12px;overflow:hidden}
 .pbtn.main{background:var(--green);color:var(--on)}
+.rv .b{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 10px;background:var(--card)}
+.rv h4{margin:0 0 6px;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--mute);display:flex;justify-content:space-between;align-items:center}
+.rv h4 button{background:none;border:0;color:var(--green);font:600 15px inherit;min-height:44px;padding:0 4px;cursor:pointer;text-transform:none;letter-spacing:0}
+.rv .r{display:flex;justify-content:space-between;gap:12px;padding:3px 0}.rv .r span:last-child{font-weight:600;text-align:right;overflow-wrap:anywhere}
+.rv .st{font-weight:700;margin:8px 0 2px}.rv .it{color:var(--mute);font-size:15px;padding-left:12px}
+.rv .ph{background:var(--okbg);color:var(--okfg);border-radius:10px;padding:6px 10px;font-size:14px;margin-top:6px}
+.rv .tot span:last-child{text-align:right;flex:0 0 auto;max-width:45%}
+.rv .tot{gap:12px;align-items:flex-start;display:flex;justify-content:space-between;font-weight:700;font-size:19px;border-top:2px solid var(--line);margin-top:8px;padding-top:10px}
+.rv .n{font-size:13px;color:var(--mute);margin-top:6px}
 .pbtn .pi{font-size:22px}
 #ps .lsg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 12px}
 #ps .pbtn .pi{display:inline;width:auto;max-height:none;background:none;margin:0;cursor:pointer;font-size:22px}
@@ -346,7 +355,7 @@ button.tile,button.ct{font:inherit;color:var(--ink);text-align:left;width:100%}
  <section>
  <h2 data-t="h5"></h2>
  <small class="h" data-t="sumHelp"></small>
- <textarea id="sum" readonly style="margin-top:10px"></textarea>
+ <div id="rev"></div><textarea id="sum" readonly tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;top:0;width:1px;height:1px;opacity:0"></textarea>
  <div id="sendBox">
   <label class="chk"><input type="checkbox" id="consent"><span data-t="consent"></span></label>
   <div style="position:absolute;left:-9999px" aria-hidden="true"><input type="text" id="website" tabindex="-1" autocomplete="off"></div>
@@ -615,6 +624,18 @@ function text(){var t=T[lang];
  q("[data-t]").forEach(function(e){var v=t[e.dataset.t];if(v!==undefined)e.textContent=v});
  $("lang").textContent=t.lang;$("copy").textContent=t.copy;$("wa").textContent=t.wa;document.documentElement.lang=lang;
 }
+function renderRev(o){var t=T[lang],es=lang==="es",S=t.S,e=$("rev");if(!e)return;
+ function R(a,b){return b?'<div class="r"><span>'+esc(a)+'</span><span>'+esc(b)+'</span></div>':""}
+ function H(x,g){return '<h4>'+x+(g?'<button type="button" data-rg="'+g+'">'+(es?"Editar":"Edit")+'</button>':"")+'</h4>'}
+ var d=checked("day"),py=checked("pay"),rf=checked("ref"),h="";
+ h+='<div class="b">'+H(es?"Tú":"You","top")+R(S.n,$("name").value.trim()||"—")+R(S.p,$("phone").value.trim()||"—")+R(S.a,$("addr").value.trim()||"—")+R(S.c,o.comm)+'</div>';
+ h+='<div class="b">'+H(es?"Entrega y pago":"Delivery & payment","top")+R(S.d,d?label(d):"")+R(S.pay,py?label(py):"")+R(S.ref,rf?label(rf):"")+R(es?"Extras":"Extras",$("auth").checked?S.auth:S.noauth)+R(S.inst,$("inst").value.trim())+R(S.spec,$("spec").value.trim())+'</div>';
+ var it="";o.names.forEach(function(nm){var st=STORES.filter(function(x){return x[0]===nm})[0],ls=String(lists[nm]||"").split("\n").map(function(x){return x.trim()}).filter(Boolean).concat(cartLines(nm)),np=(photoData[nm]||[]).length;
+  it+='<div class="st">'+(st?st[1]+" ":"")+esc(nm)+'</div>'+(ls.length?'<div class="it">'+ls.map(esc).join("<br>")+'</div>':"")+(np?'<div class="ph">📷 '+(es?"Foto de tu lista adjunta":"List photo attached")+' ('+np+')</div>':"")});
+ h+='<div class="b">'+H(es?"Tu pedido":"Your order","cart")+(it||'<div class="it">—</div>')+'</div>';
+ h+='<div class="b">'+H(es?"Costo estimado":"Estimated cost")+R(t.groc,money(o.groc))+R(t.zone+" "+(o.zone||""),o.base===null?t.confirm:money(o.base))+R(t.stores+" ("+o.n+")",money(o.fee))+R(t.large+" ("+o.total+" "+t.items+")",o.xl?t.quote:money(o.large))+'<div class="tot"><span>'+t.total+'</span><span>'+o.tot+'</span></div><div class="n">'+t.estNote+'</div></div>';
+ e.className="rv";e.innerHTML=h;
+ q("#rev [data-rg]").forEach(function(b){b.addEventListener("click",function(){if(b.dataset.rg==="cart"){showTab("cart");return}var f=$("name");f.scrollIntoView({behavior:"smooth",block:"center"});setTimeout(function(){try{f.focus()}catch(x){}},400)})})}
 function calc(){
  var t=T[lang],S=t.S,names=STORES.map(function(s){return s[0]}).filter(function(n){return sel[n]&&has(n)});
  var n=names.length,storeFee=n>=3?15:n===2?10:0,total=0,groc=0;
@@ -641,8 +662,10 @@ function calc(){
  L.push("","== "+S.fees+" ==",t.groc+": "+money(groc),t.zone+" "+(zone||"")+": "+(base===null?t.confirm:money(base)),t.stores+" ("+n+"): "+money(storeFee),t.large+": "+(xl?t.quote:money(large)),t.total+": "+tot);
  $("sum").value=L.join("\n");
  if(WHATSAPP){$("wa").style.display="block";$("wa").href="https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent($("sum").value)}
+ renderRev({names:names,comm:commName+(zone?" ("+(es_()?"Zona ":"Zone ")+zone+")":""),groc:groc,zone:zone,base:base,n:n,fee:storeFee,total:total,xl:xl,large:large,tot:tot});
  updateEta();saveProfile();showRepeat();
 }
+function es_(){return lang==="es"}
 $("lang").addEventListener("click",function(){lang=lang==="es"?"en":"es";text();renderNews();renderTiles();renderCats();renderLists();renderHist();calc()});
 ["comm","vol","name","phone","addr","inst","spec","auth"].forEach(function(i){$(i).addEventListener("input",calc);$(i).addEventListener("change",calc)});
 q('input[type="radio"]').forEach(function(r){r.addEventListener("change",calc)});
